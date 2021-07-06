@@ -1,6 +1,4 @@
-# Best Buy Tamper Monkey 
-
-Prices are falling, but it is still really hard to bag a GPU. Zotac cards are selling for an inflated price. Same with every other site. My goal is help you land a card from Best Buy, since they match the MSRP price. Its not a bot, it's a NoBot .
+# Best Buy Tamper Monkey (GPU from Best Buy)
 
 ## Description
 
