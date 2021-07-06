@@ -28,21 +28,18 @@ Tamper Monkey Script to bag GPU of your dreams from BestBuy
 ### Executing program
 
 * Once the script is saved please update the following variables:
-* Item Keyword corresponds to word in your product name (no spaces allowed)
+* Item Keyword corresponds to a keyword in your product name (no spaces allowed)
 ```
 var ITEM_KEYWORD= "3060";
 ```
-* Credit Cared CVV (requires card to be saved)
+* Credit Card CVV (requires card to be saved)
 ```
 var CREDITCARD_CVV = "***";
 ```
-* Test Mode = 1 will not purchase item. But do all the steps except pressing the last button. Test Mode = 0 will purchase the item.
+* ```TESTMODE = 1``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = 0 will``` purchase the item.
 
-```
-var TESTMODE = "1";
-```
 
-## Help
+## Workflow
 
 Any advise for common problems or issues.
 ```
