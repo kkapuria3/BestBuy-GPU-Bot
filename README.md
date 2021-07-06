@@ -14,20 +14,32 @@ Tamper Monkey Script to bag GPU of your dreams from BestBuy
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+
+1. [Tampermonkey Extention](https://www.tampermonkey.net/)
+2. BestBuy Account (Works only with saved credit cards) 
+
 
 ### Installing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* Go to tampermonkey dashboard from broswer extension. 
+* Create a new script and copy the script from '' 
+
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+* Once the script is saved please update the following variables:
+* Item Keyword corresponds to word in your product name (no spaces allowed)
 ```
-code blocks for commands
+var ITEM_KEYWORD= "3060";
+```
+* Credit Cared CVV (requires card to be saved)
+```
+var CREDITCARD_CVV = "***";
+```
+* Test Mode = 1 will not purchase item. But do all the steps except pressing the last button. Test Mode = 0 will purchase the item.
+
+```
+var TESTMODE = "1";
 ```
 
 ## Help
