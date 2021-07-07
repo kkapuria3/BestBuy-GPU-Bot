@@ -3,6 +3,9 @@
 Please star my repo if this contribution helped you ! Its FREEE !
 ```
 
+
+![logo](bb_kk.png)
+
 ## Description
 
 BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search the item repeatedly on the collection page using keywords. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Chrome Browser so it can run in all Operating Systems. It can run be in multiple chrome profiles too to run for multiple items simultaneously.
