@@ -1,5 +1,6 @@
 # BestBuy Bot — Open Source GPU Bot
 ```
+I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
 ```
 
@@ -11,6 +12,11 @@ Please star my repo if this contribution helped you ! Its FREEE !
 BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search the item repeatedly on the collection page using keywords. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Chrome Browser so it can run in all Operating Systems. It can run be in multiple chrome profiles too to run for multiple items simultaneously.
 
 “Buying a bot can increase your success chances only but no guarantee that you will successfully cart each time. If you do not agree, then please do not use this code.”
+
+## Why???
+
+I built this in response to the severe tech scalping situation that's happening right now. Almost every tech product that's coming out right now is being instantly brought out by scalping groups and then resold at at insane prices. $699 GPUs are being listed for $1700 on eBay, and these scalpers are buying 40 carts while normal consumers can't get a single one. Preorders for the PS5 are being resold for nearly $1000. My take on this is that if I release a bot that anyone can use, for free, then the number of items that scalpers can buy goes down and normal consumers can buy items for MSRP. If everyone is botting, then no one is botting.
+
 
 ```
 #AddToCartBot #AutoCheckoutBot #MABBots #AdvancedBots #AutoBuyingBot #AutoPurchasingBot #MostAdvancedBots #BestBuyBot
