@@ -1,8 +1,17 @@
-# Best Buy Tamper Monkey (GPU from Best Buy)
+# Best Buy Bot | Open Source 
+```
+Please star my repo if this contribution helped you ! Its FREEE !
+```
 
 ## Description
 
-Tamper Monkey Script to bag GPU of your dreams from BestBuy
+BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search the item repeatedly on the collection page using keywords. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Chrome Browser so it can run in all Operating Systems. It can run be in multiple chrome profiles too to run for multiple items simultaneously.
+
+“Buying a bot can increase your success chances only but no guarantee that you will successfully cart each time. If you do not agree, then please do not use this code.”
+
+```
+#AddToCartBot #AutoCheckoutBot #MABBots #AdvancedBots #AutoBuyingBot #AutoPurchasingBot #MostAdvancedBots #BestBuyBot
+```
 
 ## Getting Started
 
@@ -38,6 +47,7 @@ var ITEM_KEYWORD= "3060";
 var CREDITCARD_CVV = "***";
 ```
 * ```TESTMODE = 1``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = 0 will``` purchase the item.
+
 
 
 ## Workflow
