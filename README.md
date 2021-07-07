@@ -1,4 +1,4 @@
-# BestBuy Bot — Open Source GPU Bot
+# BestBuy Bot — Open Source GPU/PS5/Xbox Bot
 ```
 I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
