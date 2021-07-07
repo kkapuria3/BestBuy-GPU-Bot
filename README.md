@@ -1,4 +1,4 @@
-# Best Buy Bot | Open Source 
+# BestBuy Bot for Graphic Card | Open Source 
 ```
 Please star my repo if this contribution helped you ! Its FREEE !
 ```
