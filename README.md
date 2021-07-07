@@ -4,7 +4,7 @@ I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
 ```
 
-<img src="bb_kk.png" width="650" height="324">
+<img src="bb_kk.png" width="650" height="500">
 
 ## Description
 
