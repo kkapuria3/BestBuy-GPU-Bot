@@ -14,13 +14,16 @@ Tamper Monkey Script to bag GPU of your dreams from BestBuy
 
 
 1. [Tampermonkey Extention](https://www.tampermonkey.net/)
-2. BestBuy Account (Works only with saved credit cards) 
+2. BestBuy Account (Please be signed in, Save your address, Save your creditcard) 
 
 
 ### Installing
 
 * Go to tampermonkey dashboard from broswer extension. 
-* Create a new script and copy the script from '' 
+* Create a new script and copy the script from 'best-buy-tm.js'.
+* Save the script
+* Change required parameters* (Important)
+
 
 
 ### Executing program
@@ -39,27 +42,27 @@ var CREDITCARD_CVV = "***";
 
 ## Workflow
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+This tool is designed to multitask. That means, it can run in many tabs simultaneously, if there is a ```ITEM_KEYWORD``` overlap.
+If there is no ```ITEM_KEYWORD``` overlap. You will need to create a new copy of script for each ```ITEM_KEYWORD```.
+
+Please make sure your CART is empty.
+
+After updating variables and enabling the script in Tampermonkey, go to the your favourite GPU page in BestBuy.
+If the Title of GPU has ```ITEM_KEYWORD```, it will add the item to cart and checkout. If item is out of stock it will keep on refreshing every 5 seconds.
+
+Please use ```TESTMODE = 1``` to test with an item already in stock.
 
 ## Authors
 
-Contributors names and contact info
-
-ex. KK
+* KK
 
 
 ## Version History
 
 
-* 0.1
-    * Initial Release (Under Dev)
+* 1.0
+    * Initial Release 
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
-
-## Acknowledgments
-
