@@ -1,4 +1,4 @@
-# BestBuy Bot for Graphic Card | Open Source 
+# BestBuy Bot — Open Source GPU Bot
 ```
 Please star my repo if this contribution helped you ! Its FREEE !
 ```
