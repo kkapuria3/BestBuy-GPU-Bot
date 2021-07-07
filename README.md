@@ -79,3 +79,7 @@ Please use ```TESTMODE = 1``` to test with an item already in stock.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
+
+```
+By no means am I a great coder or know the best practices for this. But I can hack things together. My approach isnt probably the best, but I learned a lot out of it.
+```
