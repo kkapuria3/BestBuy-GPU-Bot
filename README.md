@@ -33,7 +33,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 
 1. [Tampermonkey Extention](https://www.tampermonkey.net/)
-2. BestBuy Account (Please be signed in, Save your address, Save your creditcard) 
+2. BestBuy Account (Please be signed in and have your address and credit card saved in bb account) 
 
 
 ### Installing
