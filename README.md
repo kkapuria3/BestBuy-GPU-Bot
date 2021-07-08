@@ -82,7 +82,12 @@ Please use ```TESTMODE = 1``` to test with an item already in stock.
 
 * 1.0
     * Initial Release 
-
+* 1.1 
+	* Handle Please Wait Gracefully
+	* If Please Wait button shows up, bot will check every for second ATC button every 20 seconds
+	* Whenever second ATC button appears, it will click and checkout
+	* Reading Logs in Console
+	
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
