@@ -33,52 +33,24 @@
 
 "use strict";
 
-var ITEM_KEYWORD= "5600";
+var ITEM_KEYWORD= "***";
 var CREDITCARD_CVV = "***";
 var TESTMODE = "1"; // TESTMODE = "0" will buy the card
 
+
 //________________________________________________________________________
 
-                        // Create Badge
+                 // Create Floating Status Bar
 //________________________________________________________________________
 
-function createBadge() {
-  const iconUrl =
-    "https://kkapuria3.github.io/images/KK.png";
-  const $container = document.createElement("div");
-  const $bg = document.createElement("div");
-  const $link = document.createElement("a");
-  const $img = document.createElement("img");
-
-  $link.setAttribute("href", "https://github.com/kkapuria3");
-  $link.setAttribute("target", "_blank");
-  $link.setAttribute("title", "RefreshNoBot");
-  $img.setAttribute("src", iconUrl);
-
-  $container.style.cssText =
-    "position:fixed;left:0;bottom:0;width:80px;height:65px;background: transparent;z-index: 1000;transition: all 500ms ease; transform: translate(-80px, 80px);";
-  $bg.style.cssText =
-    "position:absolute;left:-100%;top:0;width:200px;height:180px;transform:rotate(45deg);background:#000;box-shadow: 0px 0 10px #060303; border: 1px solid #FFF;";
-  $link.style.cssText =
-    "position:absolute;display:block;top:2px;left: 0px; z-index:10;width: 60px;height:60px;border-radius: 10px;overflow:hidden;";
-  $img.style.cssText = "display:block;width:100%";
-  $link.appendChild($img);
-  $container.appendChild($bg);
-  $container.appendChild($link);
-  return $container;
-}
-//________________________________________________________________________
-
-                        // Create LOG Bar
-//________________________________________________________________________
-
-function createLogBadge(status) {
+function createFloatingBadge(mode,status) {
     const iconUrl = "https://kkapuria3.github.io/images/KK.png";
     const $container = document.createElement("div");
     const $bg = document.createElement("div");
     const $link = document.createElement("a");
     const $img = document.createElement("img");
     const $text = document.createElement("P");
+    const $mode = document.createElement("P");
     const $status1 = document.createElement("P");
 
 
@@ -86,24 +58,25 @@ function createLogBadge(status) {
     $link.setAttribute("target", "_blank");
     $link.setAttribute("title", "RefreshNoBot");
     $img.setAttribute("src", iconUrl);
-    $text.innerText = "Open Source BB-Bot";
+    var MAIN_TITLE = ("Open Source BB-Bot V2.0 | TESTMODE: " +TESTMODE );
+    $text.innerText = MAIN_TITLE;
+    $mode.innerText = mode;
     $status1.innerText = status;
 
-    $container.style.cssText =
-        "position:fixed;left:0;bottom:0;width:100%;height:60px;background: black;";
-    $bg.style.cssText =
-        "position:absolute;left:-100%;top:0;width:60px;height:55px;background:#1111;box-shadow: 0px 0 10px #060303; border: 1px solid #FFF;";
-    $link.style.cssText =
-        "position:absolute;display:block;top:11px;left: 0px; z-index:10;width: 50px;height:50px;border-radius: 1px;overflow:hidden;";
+    $container.style.cssText = "position:fixed;left:0;bottom:0;width:100%;height:60px;background: black;";
+    $bg.style.cssText = "position:absolute;left:-100%;top:0;width:60px;height:55px;background:#1111;box-shadow: 0px 0 10px #060303; border: 1px solid #FFF;";
+    $link.style.cssText = "position:absolute;display:block;top:11px;left: 0px; z-index:10;width: 50px;height:50px;border-radius: 1px;overflow:hidden;";
     $img.style.cssText = "display:block;width:100%";
-    $text.style.cssText = "left:100;bottom:50;background: transperant; color: white;";
-    $status1.style.cssText = "position:absolute;display:block;top:15px;left: 95px;background: transperant; color: white;";
+    $text.style.cssText = "position:absolute;display:block;top:1px;left: 50px;background: transperant; color: white;";
+    $mode.style.cssText = "position:absolute;display:block;top:20px;left: 50px;background: transperant; color: white;";
+    $status1.style.cssText = "position:absolute;display:block;top:40px;left: 50px;background: transperant; color: white;";
     //
     //
     $link.appendChild($img);
     $container.appendChild($bg);
     $container.appendChild($link);
     $container.appendChild($text);
+    $container.appendChild($mode);
     $container.appendChild($status1)
     return $container;
 }
@@ -121,9 +94,9 @@ var pagetitle = String(document.title);
 if (pagetitle.includes(ITEM_KEYWORD)) {
         //Create Custom Badge
         //
-        const $badge = createLogBadge("Status");
+        const $badge = createFloatingBadge("Auto Detecting Mode", "Initializing ..");
         document.body.appendChild($badge);
-        setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 0);
+        $badge.style.transform = "translate(0, 0)"
         //Out of Stock Button
         //
         var OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
@@ -134,7 +107,15 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                 //
                 console.log('Out of Stock Button is Found: Just Refreshing !')
                 // Lets just reload when its OOSing
-                setTimeout(function(){ location.reload(); }, 20*100);
+                setTimeout(function(){
+                        const $badge = createFloatingBadge("No Stock Found", "Lets Refresh !");
+                        document.body.appendChild($badge);
+                        setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 0);
+                        //
+                        location.reload();
+                                         //
+                                         //
+                }, 20*100);
         }
         // If Out of Stock Button is Not Found.
         // We will begin working of our bot
@@ -167,6 +148,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
 
                             if (MainButtonColor === 'rgb(197, 203, 213)') {
                                 console.log('---Please Wait Mode Activated---')
+                                var MODE = "ATC was pressed. Please wait, do not Refresh!!"
 
                                 //
                                 var RETRY_COUNT="1"
@@ -174,9 +156,9 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                                 setInterval(function(){
                                     //
                                     var TRIES = ("Retry Count: "+RETRY_COUNT);
-                                    const $badge = createLogBadge(TRIES);
+                                    const $badge = createFloatingBadge(MODE,TRIES);
                                     document.body.appendChild($badge);
-                                    setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 0);
+                                    $badge.style.transform = "translate(0, 0)"
                                     // Run this every 20 seconds
                                     setTimeout(function(){
 
@@ -186,20 +168,20 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                                         console.log("Please Wait Button Detected :" + MainButtonColor + " | Lets keep trying ..");
 
                                         if (MainButtonColor === 'rgb(255, 224, 0)') {
-                                            // Color of Button Changes to yellow then click again
-                                            let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
-                                            //
-                                            console.log("Add to Cart is available:" + ATC_Color + " | Lets Bag This ! ");
-                                            var ATCYellowButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
-                                            ATCYellowButton[0].click()
-                                            //Wait for 10 seconds and press go Go to cart button
-                                            setTimeout(function(){
-                                                // Press secondary button
-                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
-                                                // Press ATC button again
+                                                // Color of Button Changes to yellow then click again
+                                                let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
                                                 //
-                                                GotoCartButton[0].click()
-                                            }, 10000)
+                                                console.log("Add to Cart is available:" + ATC_Color + " | Lets Bag This ! ");
+                                                var ATCYellowButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+                                                ATCYellowButton[0].click()
+                                                //Wait for 10 seconds and press go Go to cart button
+                                                setTimeout(function(){
+                                                        // Press secondary button
+                                                        var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                        // Press ATC button again
+                                                        //
+                                                        GotoCartButton[0].click()
+                                                }, 10000)
 
                                         }
                                         //
@@ -233,6 +215,11 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
 // CART PAGE OPERATIONS
 
 else if (location.href.includes("www.bestbuy.com/cart")) {
+    //Create Custom Badge
+    //
+    const $badge = createFloatingBadge("Cart Page","Verfying 1st item in cart has KEYWORD");
+    document.body.appendChild($badge);
+    $badge.style.transform = "translate(0, 0)"
 
     //Wait 3 Seconds on Cart Page
     //
@@ -260,9 +247,9 @@ else if (location.href.includes("www.bestbuy.com/cart")) {
 else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
     //Create Custom Badge
     //
-    const $badge = createBadge();
+    const $badge = createFloatingBadge("Final CheckPoint","Verifying and Submitting");
     document.body.appendChild($badge);
-    setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 300);
+    $badge.style.transform = "translate(0, 0)"
     //
     //
     setTimeout(function() {
