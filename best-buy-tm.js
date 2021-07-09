@@ -14,6 +14,12 @@
 // - If Please Wait button shows up, bot will check every for second ATC button every 20 seconds
 // - Whenever second ATC button appears, it will click and checkout
 // - Reading Logs in Console
+// 2.0 - 'Please Wait...' items can now be CARTED and CHECKEDOUT
+// - If "Please Wait" button shows up, it will enter a loop of retries which will check the color of button.
+// - As long as button stays Gray, it will try and check for Yellow Color
+// - Whenever Yellow ATC button appears again, it will click and checkout
+// - Status Bar is now being added at bottom
+// - Status Bar now shows version and TESTMODE variable
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
@@ -184,6 +190,20 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                                                 }, 10000)
 
                                         }
+                                        else {
+                                        // Is queue bypass available ?
+                                        // If available lets check add to cart button instanly
+                                         // Press secondary button
+                                                console.log("Checking bypass")
+                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                if (InStockButton.length > 0) {
+                                                        GotoCartButton[0].click()
+                                                //
+                                                }
+                                            //
+                                                // Press ATC button again
+                                                //
+                                        }
                                         //
 
                                     }, 5*1000);
@@ -264,10 +284,10 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
                 var TextUpdates = document.getElementById("text-updates").click()
                 //console.log(TextUpdates[0].checked)
             }
-        if (TESTMODE === 0){
+        if (TESTMODE === "0"){
         //Is test mode is OFF go press place order button
         //
-        var PLACE_ORDER = document.getElementByClassName("btn btn-lg btn-block btn-primary button__fast-track").click()
+        var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track").click()
         //
         }
         //
