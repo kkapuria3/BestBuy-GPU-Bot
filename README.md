@@ -72,6 +72,9 @@ If the Title of GPU has ```ITEM_KEYWORD```, it will add the item to cart and che
 
 Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 
+## Discord
+* [ The Shire Discord | channel: #best-buy-bot-support](https://discord.gg/MZ3sHUer5S)
+
 ## Authors
 
 * KK
