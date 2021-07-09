@@ -6,7 +6,7 @@ Please star my repo if this contribution helped you ! Its FREEE !
 ** CREDIT CARD INFORMATION IS NOT USED. BOT WILL ALSO RUN WITHOUT CVV INFORMATION; just not do FINAL CHECKOUT
 ```
 
-* Recommended browser: ![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png)
+* Recommended browser: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="100" height="100">
 <img src="bb_kk.png" width="650" height="450">
 
 ## Description
