@@ -96,7 +96,11 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
  	* Whenever Yellow ATC button appears again, it will click and checkout
  	* Status Bar is now being added at bottom
  	* Status Bar now shows version and TESTMODE variable	
+
+## Example on AMD 5800
 	
+![](resources/video/AMD-5800-please-wait.webm)
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
