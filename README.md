@@ -6,7 +6,7 @@ Please star my repo if this contribution helped you ! Its FREEE !
 ** CREDIT CARD INFORMATION IS NOT USED. BOT WILL ALSO RUN WITHOUT CVV INFORMATION; just not do FINAL CHECKOUT
 ```
 
-<img src="bb_kk.png" width="350" height="150">
+<img src="bb_kk.png" width="650" height="450">
 
 ## Description
 
