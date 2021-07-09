@@ -6,6 +6,7 @@ Please star my repo if this contribution helped you ! Its FREEE !
 ** CREDIT CARD INFORMATION IS NOT USED. BOT WILL ALSO RUN WITHOUT CVV INFORMATION; just not do FINAL CHECKOUT
 ```
 
+* Recommended browser: ![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png)
 <img src="bb_kk.png" width="650" height="450">
 
 ## Description
@@ -97,9 +98,6 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
  	* Status Bar is now being added at bottom
  	* Status Bar now shows version and TESTMODE variable	
 
-## Example on AMD 5800
-	
-![](https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/main/resources/video/AMD-5800-please-wait.webm?raw=true)
 
 ## License
 
