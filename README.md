@@ -99,7 +99,7 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 
 ## Example on AMD 5800
 	
-![](resources/video/AMD-5800-please-wait.webm)
+![](https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/main/resources/video/AMD-5800-please-wait.webm?raw=true)
 
 ## License
 
