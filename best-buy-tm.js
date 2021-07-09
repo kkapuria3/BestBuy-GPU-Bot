@@ -41,7 +41,7 @@
 
 var ITEM_KEYWORD= "***";
 var CREDITCARD_CVV = "***";
-var TESTMODE = "1"; // TESTMODE = "0" will buy the card
+var TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
 
 
 //________________________________________________________________________
@@ -284,10 +284,11 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
                 var TextUpdates = document.getElementById("text-updates").click()
                 //console.log(TextUpdates[0].checked)
             }
-        if (TESTMODE === "0"){
+        if (TESTMODE === "No"){
         //Is test mode is OFF go press place order button
         //
-        var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track").click()
+        console.log("we are here")
+        var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
         //
         }
         //

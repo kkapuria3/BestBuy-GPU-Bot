@@ -56,7 +56,7 @@ var ITEM_KEYWORD= "3060";
 ```
 var CREDITCARD_CVV = "***";
 ```
-* ```TESTMODE = 1``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = 0 will``` purchase the item.
+* ```TESTMODE = "Yes"``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = "No" ``` will purchase the item.
 
 
 
@@ -70,7 +70,7 @@ Please make sure your CART is empty.
 After updating variables and enabling the script in Tampermonkey, go to the your favourite GPU page in BestBuy.
 If the Title of GPU has ```ITEM_KEYWORD```, it will add the item to cart and checkout. If item is out of stock it will keep on refreshing every 5 seconds.
 
-Please use ```TESTMODE = 1``` to test with an item already in stock.
+Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 
 ## Authors
 
@@ -87,6 +87,12 @@ Please use ```TESTMODE = 1``` to test with an item already in stock.
 	* If Please Wait button shows up, bot will check every for second ATC button every 20 seconds
 	* Whenever second ATC button appears, it will click and checkout
 	* Reading Logs in Console
+* 2.0 - 'Please Wait...' items can now be CARTED and CHECKEDOUT
+ 	* If "Please Wait" button shows up, it will enter a loop of retries which will check the color of button.
+ 	* As long as button stays Gray, it will try and check for Yellow Color
+ 	* Whenever Yellow ATC button appears again, it will click and checkout
+ 	* Status Bar is now being added at bottom
+ 	* Status Bar now shows version and TESTMODE variable	
 	
 ## License
 
