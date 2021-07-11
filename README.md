@@ -10,7 +10,7 @@ Please Join Support & FAQ Discord if you have questions.
 
 ```
 
-* Support & FAQ Discord : <a href="https://discord.gg/kn2p8x9Rhz"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="17"></img></a>
+* Support & FAQ Discord : <a href="https://discord.gg/kn2p8x9Rhz"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
 * Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
 <img src="bb_kk.png" width="650" height="450">
 
@@ -77,9 +77,6 @@ After updating variables and enabling the script in Tampermonkey, go to the your
 If the Title of GPU has ```ITEM_KEYWORD```, it will add the item to cart and checkout. If item is out of stock it will keep on refreshing every 5 seconds.
 
 Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
-
-## Discord
-* [ The Shire Discord | channel: #best-buy-bot-support](https://discord.gg/MZ3sHUer5S)
 
 ## Authors
 
