@@ -16,7 +16,7 @@ Please Join Support & FAQ Discord if you have questions.
 
 ## Description
 
-BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search the item repeatedly on the collection page using one keyword. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Firefox Browser so it can run in all Operating Systems. It can run for multiple items simultaneously.
+BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search an item repeatedly on the item page using one keyword. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Firefox Browser so it can run in all Operating Systems. It can run for multiple items simultaneously.
 
 "Running a bot can increase your success chances only ; but does not guarantee that you will successfully cart each time. If you do not agree, then please do not use this code."
 
@@ -104,7 +104,3 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
-
-```
-By no means am I a great coder or know the best practices for this. But I can hack things together. My approach isnt probably the best, but I learned a lot out of it.
-```
