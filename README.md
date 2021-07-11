@@ -4,6 +4,10 @@ I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
 
 ** CREDIT CARD INFORMATION IS NOT USED. BOT WILL ALSO RUN WITHOUT CVV INFORMATION; just not do FINAL CHECKOUT
+
+
+Support & FAQ Discord:
+
 ```
 
 * Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
