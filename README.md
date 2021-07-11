@@ -6,11 +6,11 @@ Please star my repo if this contribution helped you ! Its FREEE !
 ** CREDIT CARD INFORMATION IS NOT USED. BOT WILL ALSO RUN WITHOUT CVV INFORMATION; just not do FINAL CHECKOUT
 
 
-Please Join Support & FAQ Discord if you have questions:
+Please Join Support & FAQ Discord if you have questions.
 
 ```
 
-<a href="https://discord.gg/kn2p8x9Rhz"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="50" height="40"></img></a>
+<a href="https://discord.gg/kn2p8x9Rhz"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="50" height="45"></img></a> <- BestBuy Bot — Open Source Discord
 
 * Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
 <img src="bb_kk.png" width="650" height="450">
