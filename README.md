@@ -63,8 +63,14 @@ const ITEM_KEYWORD= "3060";
 ```
 const CREDITCARD_CVV = "***";
 ```
-* ```const TESTMODE = "Yes"``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = "No" ``` will purchase the item.
-* ```const MAX_RETRIES = "200";``` MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
+* Test Mode "YES" will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = "No" ``` will purchase the item.
+```
+const TESTMODE = "Yes"
+``` 
+* MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload. 
+```
+const MAX_RETRIES = "200";
+``` 
 
 
 
