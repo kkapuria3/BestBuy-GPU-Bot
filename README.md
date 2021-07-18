@@ -39,7 +39,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 
 1. [Tampermonkey Extention](https://www.tampermonkey.net/)
-2. BestBuy Account (Please be signed in and have your address and credit card saved in bb account) 
+2. BestBuy Account (Please be signed in) 
 3. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
 
 
