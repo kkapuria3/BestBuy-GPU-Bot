@@ -10,7 +10,7 @@ Please Join Support & FAQ Discord if you have questions.
 
 ```
 
-* Support & FAQ Discord : <a href="https://discord.gg/kn2p8x9Rhz"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
+* Support & FAQ Discord : <a href="https://discord.gg/UcxcyxS5X8"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
 * Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
 <img src="bb_kk.png" width="650" height="450">
 
@@ -40,6 +40,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 1. [Tampermonkey Extention](https://www.tampermonkey.net/)
 2. BestBuy Account (Please be signed in and have your address and credit card saved in bb account) 
+3. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
 
 
 ### Installing
@@ -47,22 +48,23 @@ I built this in response to the severe tech scalping situation that's happening 
 * Go to tampermonkey dashboard from broswer extension. 
 * Create a new script and copy the script from 'best-buy-tm.js'.
 * Save the script
-* Change required parameters* (Important)
+* Change required CONSTANTS* (Important)
 
 
 
 ### Executing program
 
-* Once the script is saved please update the following variables:
+* Once the script is saved please update the following CONSTANTS on top of page:
 * Item Keyword corresponds to a keyword in your product name (no spaces allowed)
 ```
-var ITEM_KEYWORD= "3060";
+const ITEM_KEYWORD= "3060";
 ```
-* Credit Card CVV (requires card to be saved)
+* Credit Card CVV  (Not Required. BOT just wont do final checkout)
 ```
-var CREDITCARD_CVV = "***";
+const CREDITCARD_CVV = "***";
 ```
-* ```TESTMODE = "Yes"``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = "No" ``` will purchase the item.
+* ```const TESTMODE = "Yes"``` will not purchase item. But do all the steps except pressing the last button. ```TESTMODE = "No" ``` will purchase the item.
+* ```const MAX_RETRIES = "200";``` MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
 
 
 
@@ -99,7 +101,15 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
  	* Whenever Yellow ATC button appears again, it will click and checkout
  	* Status Bar is now being added at bottom
  	* Status Bar now shows version and TESTMODE variable	
-
+* 2.5 - 'Fixed Memory Leak' no more refresh ! We will recycle tabs.
+	* Due to constant reloading of OOS items, memory on your browser slowly blows up
+	* We will now kill the tab if item is OOS and open it in new page. Doing this infact reduces the total RAM usage.
+	* Button clicks no more use .click() but instead use EventListeners()
+	* Status Bar is now 50% of screen.  Little taller so last line is visible when page is loading.
+	* Status Bar now shows ITEM_KEYWORD
+	* We will now play a music when item is carted.
+	* Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
+	* MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
 
 ## License
 
