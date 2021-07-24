@@ -86,9 +86,9 @@ If the Title of GPU has ```ITEM_KEYWORD```, it will add the item to cart and che
 
 Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 
-## Authors
+## Author
 
-* KK
+[](https://www.buymeacoffee.com/kapuriakaran)
 
 
 ## Version History
@@ -116,6 +116,7 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* We will now play a music when item is carted.
 	* Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
 	* MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
+
 
 ## License
 
