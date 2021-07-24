@@ -88,7 +88,9 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 
 ## Authors
 
-* KK
+* Karan Kapuria
+
+<a href="https://www.buymeacoffee.com/kapuriakaran" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
 ## Version History

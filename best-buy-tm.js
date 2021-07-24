@@ -375,7 +375,8 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
         //
         //document.getElementById("blah").src = "http://......"
         // CVV Number of Saved Card
-        var AddCVV = document.getElementById("cvv").value = CREDITCARD_CVV;
+        // Bug fix: Silly Syntax Mistake (07/24/21)
+        document.getElementById("cvv").value = CREDITCARD_CVV;
         //
             if(document.getElementById("text-updates") != null)
             {
