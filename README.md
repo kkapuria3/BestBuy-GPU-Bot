@@ -1,4 +1,8 @@
-# BestBuy Bot — Open Source GPU/PS5/Xbox Bot
+<img src="resources/new_logo.gif">
+
+* Support & FAQ Discord : <a href="https://discord.gg/UcxcyxS5X8"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
+* Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
+
 ```
 I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
@@ -9,10 +13,7 @@ Please star my repo if this contribution helped you ! Its FREEE !
 Please Join Support & FAQ Discord if you have questions.
 
 ```
-
-* Support & FAQ Discord : <a href="https://discord.gg/UcxcyxS5X8"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
-* Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
-<img src="resources/new_logo.gif">
+# BestBuy Bot — Open Source GPU/PS5/Xbox Bot
 
 ## Description
 
