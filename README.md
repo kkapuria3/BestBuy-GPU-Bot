@@ -96,13 +96,11 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 <a href="https://www.buymeacoffee.com/kapuriakaran" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
-## Version History
+## Version History and Changelog
 
 
-* 1.0
-    * Initial Release 
-* 1.1 
-	* Handle Please Wait Gracefully
+* 1.0 Initial Release 
+* 1.1 Handle Please Wait Gracefully
 	* If Please Wait button shows up, bot will check every for second ATC button every 20 seconds
 	* Whenever second ATC button appears, it will click and checkout
 	* Reading Logs in Console
