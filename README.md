@@ -1,7 +1,7 @@
 <img src="resources/new_logo.gif">
 
 * Support & FAQ Discord : <a href="https://discord.gg/UcxcyxS5X8"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
-* Recommended browser : Mozilla Firefox <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" width="18" height="18"> 
+* **Only Works With _Google Chrome_** (Support for other browsers will be released in future versions)
 
 ```
 I took bits from best open and closed sourced bots and made this simple bot.
@@ -27,7 +27,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 
 ```
-#AddToCartBot #AutoCheckoutBot #MABBots #AdvancedBots #AutoBuyingBot #AutoPurchasingBot #MostAdvancedBots #BestBuyBot
+#fairgame
 ```
 
 ## Getting Started
@@ -38,24 +38,32 @@ I built this in response to the severe tech scalping situation that's happening 
 
 ### Dependencies
 
-
-1. [Tampermonkey Extention](https://www.tampermonkey.net/)
-2. BestBuy Account (Please be signed in) 
-3. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
+1. Install [Nerd Speak Extention](https://nerdspeak.net/tech/nerdspeak-stock-helper-extension/)
+2. Install [Tampermonkey Extention](https://www.tampermonkey.net/)
+3. BestBuy Account (Please be signed in) 
+4. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
 
 
 ### Installing
 
-* Go to tampermonkey dashboard from broswer extension. 
-* Create a new script and copy the script from [best-buy-tm.js](https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js).
+* Successfully download and install both extensions in your browser
+* Go to tampermonkey dashboard from broswer extension and create a new script
+* Delete all the contents and copy full code from [best-buy-tm.js](https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js)
 * Save the script
-* Change required CONSTANTS* (Important)
+* Updated REQUIRED FLAGS to your specifications
+
+<img src="resources/flags.gif">
 
 
+### Testing
 
-### Executing program
+* Use these product links to test the BOT
+* [AMD - Ryzen 5 5600X](https://www.bestbuy.com/site/amd-ryzen-5-5600x-4th-gen-6-core-12-threads-unlocked-desktop-processor-with-wraith-stealth-cooler/6438943.p?skuId=6438943)
+* [AMD - Ryzen 7 5800X](https://www.bestbuy.com/site/amd-ryzen-7-5800x-4th-gen-8-core-16-threads-unlocked-desktop-processor-without-cooler/6439000.p?skuId=6439000)
 
-* Once the script is saved please update the following CONSTANTS on top of page:
+
+### Further Details
+
 * Item Keyword corresponds to a keyword in your product name (no spaces allowed)
 ```
 const ITEM_KEYWORD= "3060";
@@ -68,12 +76,6 @@ const CREDITCARD_CVV = "***";
 ```
 const TESTMODE = "Yes"
 ``` 
-* MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload. 
-```
-const MAX_RETRIES = "200";
-``` 
-
-
 
 ## Workflow
 
@@ -94,13 +96,11 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 <a href="https://www.buymeacoffee.com/kapuriakaran" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
-## Version History
+## Version History and Changelog
 
 
-* 1.0
-    * Initial Release 
-* 1.1 
-	* Handle Please Wait Gracefully
+* 1.0 Initial Release 
+* 1.1 Handle Please Wait Gracefully
 	* If Please Wait button shows up, bot will check every for second ATC button every 20 seconds
 	* Whenever second ATC button appears, it will click and checkout
 	* Reading Logs in Console
@@ -119,6 +119,15 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* We will now play a music when item is carted.
 	* Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
 	* MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
+* 3.0 -  Conjuction with 'Nerd Speak' Extension
+  	* MAJOR CHANGE: BOT ONLY WORKS FOR CHROME NOW (Version 2.5 and older are all browser compatible)
+  	* Bot will now extract queue time from NS extension
+  	* QUEUE_TIME_CUTOFF will keep requesting better queue times until target value is reached
+  	* NEW_QUEUE_TIME_DELAY is delay in seconds between requesting new queue times.
+  	* Status Bar is 75px fixed
+  	* Status Bar now shows more information
+  	* Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
+  	* MAX_RETRIES will be deprecated in future.	
 
 ## License
 

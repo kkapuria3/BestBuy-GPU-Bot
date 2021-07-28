@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
-// @version      2.5
+// @version      3.0
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -10,41 +10,52 @@
 // 1.0 - Initial release
 // 2.0 - 'Please Wait...' items can now be CARTED and CHECKEDOUT
 // 2.5 - 'Fixed Memory Leak' no more refresh ! We will recycle tabs.
-// - Due to constant reloading of OOS items, memory on your browser slowly blows up
-// - We will now kill the tab if item is OOS and open it in new page. Doing this infact reduces the total RAM usage.
-// - Button clicks no more use .click() but instead use EventListeners()
-// - Status Bar is now 50% of screen.  Little taller so last line is visible when page is loading.
-// - Status Bar now shows ITEM_KEYWORD
-// - We will now play a music when item is carted.
+// 3.0 -  Works in conjuction with 'Nerd Speak' Extension
+// - MAJOR CHANGE: BOT ONLY WORKS FOR CHROME NOW (Version 2.5 and older are all browser compatible)
+// - Bot will now extract queue time from NS extension
+// - QUEUE_TIME_CUTOFF will keep requesting better queue times until target value is reached
+// - NEW_QUEUE_TIME_DELAY is delay in seconds between requesting new queue times.
+// - Status Bar is 75px fixed
+// - Status Bar now shows more information
 // - Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
-// - MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
+// - MAX_RETRIES will be deprecated in future.
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
 //rgb(255, 224, 0) add to cart
 
 /*
-  _____       __               _     _   _  ____  ____        _
- |  __ \     / _|             | |   | \ | |/ __ \|  _ \      | |
- | |__) |___| |_ _ __ ___  ___| |__ |  \| | |  | | |_) | ___ | |_
- |  _  // _ \  _| '__/ _ \/ __| '_ \| . ` | |  | |  _ < / _ \| __|
- | | \ \  __/ | | | |  __/\__ \ | | | |\  | |__| | |_) | (_) | |_
- |_|  \_\___|_| |_|  \___||___/_| |_|_| \_|\____/|____/ \___/ \__|
+          (                            )           )
+   (      )\ )  *   )     (         ( /(     (  ( /(   *   )
+ ( )\ (  (()/(` )  /(   ( )\    (   )\())  ( )\ )\())` )  /(
+ )((_))\  /(_))( )(_))  )((_)   )\ ((_)\   )((_|(_)\  ( )(_))
+((_)_((_)(_)) (_(_())  ((_)_ _ ((_)_ ((_) ((_)_  ((_)(_(_())
+ | _ ) __/ __||_   _|   | _ ) | | \ \ / /  | _ )/ _ \|_   _|
+ | _ \ _|\__ \  | |     | _ \ |_| |\ V /   | _ \ (_) | | |
+ |___/___|___/  |_|     |___/\___/  |_|    |___/\___/  |_|
 
                                                                   */
-//
-//________________________________________________________________________
-
-                 //  PLEASE UPDATE THESE CONSTANTS
-//________________________________________________________________________
-
 "use strict";
+//________________________________________________________________________
 
-const ITEM_KEYWORD= "5600"; // NO SPACES IN KEYWORD - ONLY ONE WORD
+                       //  CONSTANTS
+    // [ Do not add/remove quotation marks when updating]
+//________________________________________________________________________
+
+//____ REQUIRED FLAGS ____________________________________________________
+
+const ITEM_KEYWORD= "5800"; // NO SPACES IN KEYWORD - ONLY ONE WORD
 const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
 const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
-const MAX_RETRIES = "200" // Page will auto refresh after retries
 
+//____ PLEASE WAIT FLAGS : ADVANCED OPTIONS _____________________________
+
+const QUEUE_TIME_CUTOFF = 3 // (in Minutes) Keep retrying until queue time is below.
+const NEW_QUEUE_TIME_DELAY = 1 // (in Seconds) Ask new queue time set seconds
+
+//____ LAZY FLAGS : WILL NOT AFFECT BOT PERFORMACE _____________________
+
+const MAX_RETRIES = "200" // Fossil of EARTH
 
 //
 //________________________________________________________________________
@@ -67,12 +78,12 @@ function createFloatingBadge(mode,status) {
     $link.setAttribute("target", "_blank");
     $link.setAttribute("title", "RefreshNoBot");
     $img.setAttribute("src", iconUrl);
-    var MAIN_TITLE = ("Open Source BB-Bot V2.5   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+    var MAIN_TITLE = ("Open Source BB-Bot V3.0   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
     $text.innerText = MAIN_TITLE;
     $mode.innerText = mode;
     $status1.innerText = status;
 
-    $container.style.cssText = "position:fixed;left:0;bottom:0;width:50%;height:80px;background: black;";
+    $container.style.cssText = "position:fixed;left:0;bottom:0;width:850px;height:75px;background: black;";
     $bg.style.cssText = "position:absolute;left:-100%;top:0;width:60px;height:55px;background:#1111;box-shadow: 0px 0 10px #060303; border: 1px solid #FFF;";
     $link.style.cssText = "position:absolute;display:block;top:11px;left: 0px; z-index:10;width: 50px;height:50px;border-radius: 1px;overflow:hidden;";
     $img.style.cssText = "display:block;width:100%";
@@ -121,7 +132,7 @@ function cartpageoperationsEvenHandler (evt) {
                     //console.log(CartItemCheck[0])
                     //
                     //
-                    if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){ //SKU of 3060Ti
+                    if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){
                         //
                         console.log('Item Has been Confirmed !')
                         console.log('Click Checkout')
@@ -158,7 +169,7 @@ function pleasewaitcompletedEventHandler (evt) {
             GotoCartButton[0].click (cartpageoperationsEvenHandler);
             GotoCartButton = null ;
 
-    }, 3000)
+    }, 4000)
 }
 
 
@@ -181,14 +192,17 @@ function instockEventHandler (evt) {
 
         if (MainButtonColor === 'rgb(197, 203, 213)') {
             console.log('---Please Wait Mode Activated---')
-            var MODE = "Trying to Cart 🔴 Please wait, do not Refresh!! "
+            var MODE = "Trying to Cart 🛑 BOT WILL AUTOMATICALLY REFRESH !! "
 
             //
             var RETRY_COUNT="1"
             // Run this every 5 seconds
             setInterval(function(){
-                //
-                var TRIES = ("Max Retries: "+MAX_RETRIES+ "   ◻️  Retry Count: "+RETRY_COUNT);
+                //Parsing New Time Button
+                var BetterTime = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                //Parsing Time Remaining on Queue
+                var time = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/div/div/p[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
+                var TRIES = ("Request New Queue Time : "+NEW_QUEUE_TIME_DELAY+" Seconds ◻️ Minimum Queue Time Cut-off: " + QUEUE_TIME_CUTOFF + " Mins ◻️ " + time + " ◻️  Retry Count: "+RETRY_COUNT );
                 const $badge = createFloatingBadge(MODE,TRIES);
                 document.body.appendChild($badge);
                 $badge.style.transform = "translate(0, 0)"
@@ -231,7 +245,24 @@ function instockEventHandler (evt) {
                                     GotoCartButton = null ;
                                 //
                                 }
+
+                                const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
+                                const found = time.match(regex);
+                                console.log(found[0])
+                                if ( found[0] > QUEUE_TIME_CUTOFF) {
+                                   let BetterTimeColor = window.getComputedStyle(BetterTime).backgroundColor
+                                   BetterTime.click()
+                                   console.log(BetterTimeColor)
+                                                               if (BetterTimeColor === 'rgb(197, 203, 213)') {
+                                                                   //console.log('refresh')
+                                                                   window.open(window.location.href, '_blank');
+                                                                   window.close();
+                                                               }
+                                }
+
+
                         }
+
                         //
 
                 }, 5*1000);
@@ -239,7 +270,7 @@ function instockEventHandler (evt) {
                 RETRY_COUNT++;
                 if (RETRY_COUNT > MAX_RETRIES){ location.reload(); }
 
-            },4000)
+            },NEW_QUEUE_TIME_DELAY*1000)
 
         }
         else {
