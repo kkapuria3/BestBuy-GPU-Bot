@@ -52,7 +52,7 @@ I built this in response to the severe tech scalping situation that's happening 
 * Save the script
 * Updated REQUIRED FLAGS to your specifications
 
-<img src="resources/required_flags.gif">
+<img src="resources/flags.gif">
 
 
 ### Testing
