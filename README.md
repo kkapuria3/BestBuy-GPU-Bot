@@ -13,6 +13,8 @@ Please star my repo if this contribution helped you ! Its FREEE !
 Please Join Support & FAQ Discord if you have questions.
 
 ```
+FREE Amazon Bot : [<img src="https://raw.githubusercontent.com/kkapuria3/FREE-Amazon-Bot/main/resources/new_logo.gif" width="250"/>](https://github.com/kkapuria3/FREE-Amazon-Bot#readme)
+
 # BestBuy Bot — Open Source GPU/PS5/Xbox Bot
 
 ## Description
