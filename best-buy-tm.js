@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
-// @version      2.5
+// @version      3.0
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
