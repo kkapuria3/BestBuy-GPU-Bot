@@ -45,7 +45,7 @@
 
 //____ REQUIRED FLAGS ____________________________________________________
 
-const ITEM_KEYWORD= "3070"; // NO SPACES IN KEYWORD - ONLY ONE WORD
+const ITEM_KEYWORD= "5800"; // NO SPACES IN KEYWORD - ONLY ONE WORD
 const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
 const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
 
@@ -353,7 +353,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         else {
                 console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
                 // Add to Cart Button
-                var InStockButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+                var InStockButton = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
                 //
                 // Checking if ATC button is found
                 if (InStockButton.length > 0)
