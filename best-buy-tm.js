@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
-// @version      3.0
+// @version      2.5
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -10,15 +10,16 @@
 // 1.0 - Initial release
 // 2.0 - 'Please Wait...' items can now be CARTED and CHECKEDOUT
 // 2.5 - 'Fixed Memory Leak' no more refresh ! We will recycle tabs.
-// 3.0 -  Works in conjuction with 'Nerd Speak' Extension
-// - MAJOR CHANGE: BOT ONLY WORKS FOR CHROME NOW (Version 2.5 and older are all browser compatible)
+// 3.0 - Added Support for 'Nerd Speak' Extension
+// - MAJOR CHANGE: BOT works for CHROME Now
 // - Bot will now extract queue time from NS extension
 // - QUEUE_TIME_CUTOFF will keep requesting better queue times until target value is reached
 // - NEW_QUEUE_TIME_DELAY is delay in seconds between requesting new queue times.
-// - Status Bar is 75px fixed
-// - Status Bar now shows more information
+// - Status Bar is now 75% of screen.  Little taller so last line is visible when page is loading.
+// - Status Bar now shows ITEM_KEYWORD
+// - We will now play a music when item is carted.
 // - Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
-// - MAX_RETRIES will be deprecated in future.
+// - MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
@@ -44,7 +45,7 @@
 
 //____ REQUIRED FLAGS ____________________________________________________
 
-const ITEM_KEYWORD= "5800"; // NO SPACES IN KEYWORD - ONLY ONE WORD
+const ITEM_KEYWORD= "3070"; // NO SPACES IN KEYWORD - ONLY ONE WORD
 const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
 const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
 
@@ -324,7 +325,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         $badge.style.transform = "translate(0, 0)"
         //Out of Stock Button
         //
-        var OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
+        var OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
         // If Out of Stock Button is Found. Refresh
         //
         if (OOSButton.length > 0) {
@@ -352,7 +353,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         else {
                 console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
                 // Add to Cart Button
-                var InStockButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
+                var InStockButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
                 //
                 // Checking if ATC button is found
                 if (InStockButton.length > 0)
