@@ -1,6 +1,6 @@
 <img src="resources/new_logo.gif">
 
-![Discord](https://img.shields.io/discord/863863008329596968?color=%237289da%20&label=JOIN%20DISCORD&style=for-the-badge)
+![Discord](https://img.shields.io/discord/863863008329596968?color=%237289da%20&label=FOR%20SUPPORT%20AND%20FAQs%20%20%7C%20JOIN%20DISCORD&style=for-the-badge)
 <br>
 * **Only Works With _Google Chrome_** (Support for other browsers will be released in future versions)
 
