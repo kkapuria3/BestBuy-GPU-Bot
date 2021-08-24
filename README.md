@@ -3,8 +3,6 @@
 * Support & FAQ Discord : <a href="https://discord.gg/UcxcyxS5X8"><img src="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" width="18" height="18"></img></a>
 * **Only Works With _Google Chrome_** (Support for other browsers will be released in future versions)
 
-https://img.shields.io/github/license/kkapuria3/BestBuy-GPU-Bot
-
 ```
 I took bits from best open and closed sourced bots and made this simple bot.
 Please star my repo if this contribution helped you ! Its FREEE !
