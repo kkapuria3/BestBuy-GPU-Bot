@@ -352,7 +352,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         else {
                 console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
                 // Add to Cart Button
-                var InStockButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+                var InStockButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
                 //
                 // Checking if ATC button is found
                 if (InStockButton.length > 0)
