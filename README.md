@@ -14,7 +14,7 @@ Please star my repo if this contribution helped you ! Its FREEE !
 Please Join Support & FAQ Discord if you have questions.
 
 ```
-FREE Amazon Bot : [<img src="https://raw.githubusercontent.com/kkapuria3/FREE-Amazon-BUY-Bot/main/resources/new_logo1.gif" width="350"/>](https://github.com/kkapuria3/FREE-Amazon-BUY-Bot#readme)
+[<img src="https://raw.githubusercontent.com/kkapuria3/FREE-Amazon-BUY-Bot/main/resources/new_logo1.gif" width="350"/>](https://github.com/kkapuria3/FREE-Amazon-BUY-Bot#readme) [<img src="https://raw.githubusercontent.com/kkapuria3/Telegram-To-Discord-Forward-Bot/master/resources/new_logo.gif" width="350"/>](https://github.com/kkapuria3/Telegram-To-Discord-Forward-Bot#readme)
 
 # BestBuy Bot — Open Source GPU/PS5/Xbox Bot
 
