@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
-// @version      3.0
+// @version      3.1
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -20,6 +20,11 @@
 // - We will now play a music when item is carted.
 // - Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
 // - MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.
+// 3.1 Best Buy disabled 5800-5600x tests
+// - Best Buy has disabled 'Please Wait' testing for 5600-5800x, they also updated their button classes for them.
+// - Added Extra layer of code which will handle for new button classes.
+// - Please Wait functionality should still work if layer we added is not activated.
+
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
@@ -79,7 +84,7 @@ function createFloatingBadge(mode,status) {
     $link.setAttribute("target", "_blank");
     $link.setAttribute("title", "RefreshNoBot");
     $img.setAttribute("src", iconUrl);
-    var MAIN_TITLE = ("Open Source BB-Bot V3.0   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+    var MAIN_TITLE = ("Open Source BB-Bot V3.1   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
     $text.innerText = MAIN_TITLE;
     $mode.innerText = mode;
     $status1.innerText = status;
@@ -188,7 +193,27 @@ function instockEventHandler (evt) {
         //Code to run After timeout elapses
         console.log('Waiting 10 Seconds to Get Cart Ready !!')
 
+        if (document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button").length == 0) {
+
+            var CheckingInStockPressed = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
+            CheckingInStockPressed[0].click()
+            var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
+            soundData.play()
+            setTimeout(function(){
+                // Press secondary button
+                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
+                GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
+                // When a click event is detected for parsed element, please execute the function from uptop
+                GotoCartButton[0].click (cartpageoperationsEvenHandler);
+                GotoCartButton = null ;
+            }, 2000)
+
+        }
+
+
         var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+
         let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
 
         if (MainButtonColor === 'rgb(197, 203, 213)') {
@@ -377,6 +402,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                         {
                             // Wow we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
                             // It is said this this method reduces memory leaks
+
                             console.log('ATC button is yellow ! Pressing it ! ')
                             InStockButton[0].onclick = instockEventHandler;
                             InStockButton[0].addEventListener ("click", instockEventHandler, false);
