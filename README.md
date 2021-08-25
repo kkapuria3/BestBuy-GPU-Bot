@@ -131,6 +131,10 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
   	* Status Bar now shows more information
   	* Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.
   	* MAX_RETRIES will be deprecated in future.	
+* 3.1 Best Buy disabled 5800-5600x tests
+	* Best Buy has disabled 'Please Wait' testing for 5600-5800 , they also updated their button classes.
+	* I have Added extra layer of code which will handle for new button classes.
+	* `Please Wait` functionality should still work if layer we added is not activated.
 
 ## License
 
