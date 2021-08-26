@@ -27,7 +27,6 @@
 // - Please Wait functionality should still work if layer we added is not activated.
 // 3.2 Extra Button Class Layers Added
 // - Button classes layered into 'if else' loops
-// - Auto Update Script :)
 // - When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
 // - If not Please Wait then 2nd ATC is triggered
 // ==/UserScript==
@@ -384,9 +383,22 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         $badge.style.transform = "translate(0, 0)"
         //Out of Stock Button
         //
-        var OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
+        var OOSButton ;
+        if (document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button").length == 1)
+        {
+            OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
+            console.log('Class ID 1 :' + OOSButton.length)
+        }
+        else
+        {
+            //btn btn-disabled btn-lg btn-block add-to-cart-button
+            OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
+            console.log('Class ID 2 :' + OOSButton.length)
+         }
+         console.log('Final Class ID:' + OOSButton.length)
         // If Out of Stock Button is Found. Refresh
         //
+    //
         if (OOSButton.length > 0) {
                 //
                 //
