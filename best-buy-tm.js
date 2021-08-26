@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
-// @version      3.1
+// @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
+// @version      3.2
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -24,7 +25,10 @@
 // - Best Buy has disabled 'Please Wait' testing for 5600-5800x, they also updated their button classes for them.
 // - Added Extra layer of code which will handle for new button classes.
 // - Please Wait functionality should still work if layer we added is not activated.
-
+// 3.2 Extra Button Class Layers Added
+// - Button classes layered into 'if else' loops
+// - When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
+// - If not Please Wait then 2nd ATC is triggered
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
@@ -84,7 +88,7 @@ function createFloatingBadge(mode,status) {
     $link.setAttribute("target", "_blank");
     $link.setAttribute("title", "RefreshNoBot");
     $img.setAttribute("src", iconUrl);
-    var MAIN_TITLE = ("Open Source BB-Bot V3.1   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+    var MAIN_TITLE = ("Open Source BB-Bot V3.2   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
     $text.innerText = MAIN_TITLE;
     $mode.innerText = mode;
     $status1.innerText = status;
@@ -185,137 +189,166 @@ function pleasewaitcompletedEventHandler (evt) {
                   //  ITEM IN STOCK EventHandler
 //________________________________________________________________________
 
+function instockEventHandler(evt) {
+        // After pressing Add to Cart button we first wait for 5 seconds to get cart ready. In this time we will check if it shows please wait
+        setTimeout(function() {
 
-function instockEventHandler (evt) {
-    // After pressing Add to Cart button we first wait for 5 seconds to get cart ready. In this time we will check if it shows please wait
-    setTimeout(function() {
+                //Code to run After timeout elapses
+                console.log('Waiting 10 Seconds to Get Cart Ready !!')
 
-        //Code to run After timeout elapses
-        console.log('Waiting 10 Seconds to Get Cart Ready !!')
+                if (document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button").length == 0) {
 
-        if (document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button").length == 0) {
-
-            var CheckingInStockPressed = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
-            CheckingInStockPressed[0].click()
-            var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-            soundData.play()
-            setTimeout(function(){
-                // Press secondary button
-                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
-                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
-                // When a click event is detected for parsed element, please execute the function from uptop
-                GotoCartButton[0].click (cartpageoperationsEvenHandler);
-                GotoCartButton = null ;
-            }, 2000)
-
-        }
-
-
-        var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
-
-        let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
-
-        if (MainButtonColor === 'rgb(197, 203, 213)') {
-            console.log('---Please Wait Mode Activated---')
-            var MODE = "Trying to Cart 🛑 BOT WILL AUTOMATICALLY REFRESH !! "
-
-            //
-            var RETRY_COUNT="1"
-            // Run this every 5 seconds
-            setInterval(function(){
-                //Parsing New Time Button
-                var BetterTime = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                //Parsing Time Remaining on Queue
-                var time = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/div/div/p[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
-                var TRIES = ("Request New Queue Time : "+NEW_QUEUE_TIME_DELAY+" Seconds ◻️ Minimum Queue Time Cut-off: " + QUEUE_TIME_CUTOFF + " Mins ◻️ " + time + " ◻️  Retry Count: "+RETRY_COUNT );
-                const $badge = createFloatingBadge(MODE,TRIES);
-                document.body.appendChild($badge);
-                $badge.style.transform = "translate(0, 0)"
-                // Run this every 20 seconds
-                setTimeout(function(){
-
-                        //Find the Color of Main Button in Firefox
-                        var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
-                        let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
-                        //console.log(MainButtonColor);
-                        console.log("Please Wait Button Detected :" + MainButtonColor + " | Lets keep trying ..");
-
-                        if (MainButtonColor === 'rgb(255, 224, 0)') {
-                                // Color of Button Changes to yellow then click again
-                                let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
-                                // When button turns yellow, we scream bagged !
-                                console.log("Add to Cart is available:" + ATC_Color + " | Lets Bag This ! ");
-                                var ATCYellowButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
-                                // Now we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
-                                // It is said this this method reduces memory leaks
-                                ATCYellowButton[0].onclick = pleasewaitcompletedEventHandler;
-                                ATCYellowButton[0].addEventListener ("click", pleasewaitcompletedEventHandler, false);
-                                // When a click event is detected for parsed element, please execute the function from uptop
-                                ATCYellowButton[0].click (pleasewaitcompletedEventHandler);
-                                var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-                                soundData.play()
-
-                        }
-                        else {
-                        // Is queue bypass available ?
-                        // If available lets check add to cart button instanly
-                         // Press secondary button
-                                console.log("Checking bypass")
+                        var CheckingInStockPressed = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
+                        CheckingInStockPressed[0].click()
+                        var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
+                        soundData.play()
+                        setTimeout(function() {
+                                // Press secondary button
                                 var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
-                                if (GotoCartButton.length > 0) {
-                                    GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                                    GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
-                                    // When a click event is detected for parsed element, please execute the function from uptop
-                                    GotoCartButton[0].click (cartpageoperationsEvenHandler);
-                                    GotoCartButton = null ;
-                                //
+                                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
+                                GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
+                                // When a click event is detected for parsed element, please execute the function from uptop
+                                GotoCartButton[0].click(cartpageoperationsEvenHandler);
+                                GotoCartButton = null;
+                        }, 2000)
+
+                }
+
+                var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+
+                let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
+                console.log('Button Color Check : ' + MainButtonColor )
+
+                if (MainButtonColor === 'rgb(197, 203, 213)') {
+
+                        console.log('Lets check if its still Adding ..')
+
+                        setTimeout(function() {
+
+                                var REALLY_PLEASE_WAIT = window.getComputedStyle(document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button")[0]).backgroundColor
+
+                                if (REALLY_PLEASE_WAIT === 'rgb(197, 203, 213)') {
+
+                                        console.log('Its really Please Wait.')
+
+                                        var MODE = "Trying to Cart 🛑 BOT WILL AUTOMATICALLY REFRESH !! "
+
+                                        //
+                                        var RETRY_COUNT = "1"
+                                        // Run this every 5 seconds
+                                        setInterval(function() {
+                                                //Parsing New Time Button
+                                                var BetterTime = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                                //Parsing Time Remaining on Queue
+                                                var time = document.evaluate('/html/body/div[3]/main/div[2]/div[3]/div[2]/div/div/div[7]/div[1]/div/div[2]/div/div/div/p[2]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
+                                                var TRIES = ("Request New Queue Time : " + NEW_QUEUE_TIME_DELAY + " Seconds ◻️ Minimum Queue Time Cut-off: " + QUEUE_TIME_CUTOFF + " Mins ◻️ " + time + " ◻️  Retry Count: " + RETRY_COUNT);
+                                                const $badge = createFloatingBadge(MODE, TRIES);
+                                                document.body.appendChild($badge);
+                                                $badge.style.transform = "translate(0, 0)"
+                                                // Run this every 20 seconds
+                                                setTimeout(function() {
+
+                                                        //Find the Color of Main Button in Firefox
+                                                        var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+                                                        let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
+                                                        //console.log(MainButtonColor);
+                                                        console.log("Please Wait Button Detected :" + MainButtonColor + " | Lets keep trying ..");
+
+                                                        if (MainButtonColor === 'rgb(255, 224, 0)') {
+                                                                // Color of Button Changes to yellow then click again
+                                                                let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
+                                                                // When button turns yellow, we scream bagged !
+                                                                console.log("Add to Cart is available:" + ATC_Color + " | Lets Bag This ! ");
+                                                                var ATCYellowButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+                                                                // Now we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
+                                                                // It is said this this method reduces memory leaks
+                                                                ATCYellowButton[0].onclick = pleasewaitcompletedEventHandler;
+                                                                ATCYellowButton[0].addEventListener("click", pleasewaitcompletedEventHandler, false);
+                                                                // When a click event is detected for parsed element, please execute the function from uptop
+                                                                ATCYellowButton[0].click(pleasewaitcompletedEventHandler);
+                                                                var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
+                                                                soundData.play()
+
+                                                        } else {
+                                                                // Is queue bypass available ?
+                                                                // If available lets check add to cart button instanly
+                                                                // Press secondary button
+                                                                console.log("Checking bypass")
+                                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                                if (GotoCartButton.length > 0) {
+                                                                        GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
+                                                                        GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
+                                                                        // When a click event is detected for parsed element, please execute the function from uptop
+                                                                        GotoCartButton[0].click(cartpageoperationsEvenHandler);
+                                                                        GotoCartButton = null;
+                                                                        //
+                                                                }
+
+                                                                const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
+                                                                const found = time.match(regex);
+                                                                console.log(found[0])
+                                                                if (found[0] > QUEUE_TIME_CUTOFF) {
+                                                                        let BetterTimeColor = window.getComputedStyle(BetterTime).backgroundColor
+                                                                        BetterTime.click()
+                                                                        console.log(BetterTimeColor)
+                                                                        if (BetterTimeColor === 'rgb(197, 203, 213)') {
+                                                                                //console.log('refresh')
+                                                                                window.open(window.location.href, '_blank');
+                                                                                window.close();
+                                                                        }
+                                                                }
+
+
+                                                        }
+
+                                                        //
+
+                                                }, 5 * 1000);
+
+                                                RETRY_COUNT++;
+                                                if (RETRY_COUNT > MAX_RETRIES) {
+                                                        location.reload();
+                                                }
+
+                                        }, NEW_QUEUE_TIME_DELAY * 1000)
+
+                                } else {
+                                        var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
+                                         soundData.play()
+                                        setTimeout(function() {
+                                                // Press secondary button
+                                                console.log('Level 2 | Blue Cart Button Appears')
+                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
+                                                GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
+                                                // When a click event is detected for parsed element, please execute the function from uptop
+                                                GotoCartButton[0].click(cartpageoperationsEvenHandler);
+                                                GotoCartButton = null;
+                                        }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
+
                                 }
 
-                                const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
-                                const found = time.match(regex);
-                                console.log(found[0])
-                                if ( found[0] > QUEUE_TIME_CUTOFF) {
-                                   let BetterTimeColor = window.getComputedStyle(BetterTime).backgroundColor
-                                   BetterTime.click()
-                                   console.log(BetterTimeColor)
-                                                               if (BetterTimeColor === 'rgb(197, 203, 213)') {
-                                                                   //console.log('refresh')
-                                                                   window.open(window.location.href, '_blank');
-                                                                   window.close();
-                                                               }
-                                }
+                        }, 3000)
+
+                } else {
+                        setTimeout(function() {
+                                // Press secondary button
+                                console.log('Level 1 | Blue Cart Button Appears')
+                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
+                                GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
+                                // When a click event is detected for parsed element, please execute the function from uptop
+                                GotoCartButton[0].click(cartpageoperationsEvenHandler);
+                                GotoCartButton = null;
+                        }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
+
+                }
 
 
-                        }
 
-                        //
-
-                }, 5*1000);
-
-                RETRY_COUNT++;
-                if (RETRY_COUNT > MAX_RETRIES){ location.reload(); }
-
-            },NEW_QUEUE_TIME_DELAY*1000)
-
-        }
-        else {
-            setTimeout(function(){
-                // Press secondary button
-                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
-                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
-                // When a click event is detected for parsed element, please execute the function from uptop
-                GotoCartButton[0].click (cartpageoperationsEvenHandler);
-                GotoCartButton = null ;
-            }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
-
-        }
-
-
-}, 5000); //Two seconds will elapse and Code will execute.
-//
-                            }
+        }, 6000); //Two seconds will elapse and Code will execute.
+        //
+}
 //________________________________________________________________________
 
                            //  Main Code
@@ -350,9 +383,22 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         $badge.style.transform = "translate(0, 0)"
         //Out of Stock Button
         //
-        var OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
+        var OOSButton ;
+        if (document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button").length == 1)
+        {
+            OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
+            console.log('Class ID 1 :' + OOSButton.length)
+        }
+        else
+        {
+            //btn btn-disabled btn-lg btn-block add-to-cart-button
+            OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
+            console.log('Class ID 2 :' + OOSButton.length)
+         }
+         console.log('Final Class ID:' + OOSButton.length)
         // If Out of Stock Button is Found. Refresh
         //
+    //
         if (OOSButton.length > 0) {
                 //
                 //
@@ -378,7 +424,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         else {
                 console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
                 // Add to Cart Button
-                var InStockButton = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
+                var InStockButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
                 //
                 // Checking if ATC button is found
                 if (InStockButton.length > 0)
