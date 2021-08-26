@@ -135,6 +135,10 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* Best Buy has disabled 'Please Wait' testing for 5600-5800 , they also updated their button classes.
 	* I have Added extra layer of code which will handle for new button classes.
 	* `Please Wait` functionality should still work if layer we added is not activated.
+* 3.2 Extra Button Class Layers Added
+	* Button classes layered into 'if else' loops
+	* When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
+	* If not Please Wait then 2nd ATC is triggered
 
 ## License
 

@@ -2,6 +2,7 @@
 // @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
+// @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @version      3.2
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
