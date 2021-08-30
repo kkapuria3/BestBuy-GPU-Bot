@@ -30,6 +30,9 @@
 // - Button classes layered into 'if else' loops
 // - When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
 // - If not Please Wait then 2nd ATC is triggered
+//https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
+
+
 // ==/UserScript==
 
 //rgb(197, 203, 213) pleasewait
@@ -480,9 +483,14 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
         //
         //document.getElementById("blah").src = "http://......"
         // CVV Number of Saved Card
-        // Bug fix: Silly Syntax Mistake (07/24/21)
+        // Bug fix: by craz3drunner (discord member)
         document.getElementById("cvv").value = CREDITCARD_CVV;
-        //
+        document.getElementById("cvv").focus();
+        document.getElementById("cvv").select();
+        if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
+            document.getElementById("cvv").value = CREDITCARD_CVV;
+        }
+
             if(document.getElementById("text-updates") != null)
             {
                 //
