@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      3.2
+// @version      3.3
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -30,6 +30,8 @@
 // - Button classes layered into 'if else' loops
 // - When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
 // - If not Please Wait then 2nd ATC is triggered
+// 3.3 Button layers are reinforced
+// - Easy edit button classes and better console logs.
 //https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
 
 
@@ -58,7 +60,7 @@
 
 //____ REQUIRED FLAGS ____________________________________________________
 
-const ITEM_KEYWORD= "5800"; // NO SPACES IN KEYWORD - ONLY ONE WORD
+const ITEM_KEYWORD= "5600"; // NO SPACES IN KEYWORD - ONLY ONE WORD
 const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
 const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
 
@@ -92,7 +94,7 @@ function createFloatingBadge(mode,status) {
     $link.setAttribute("target", "_blank");
     $link.setAttribute("title", "RefreshNoBot");
     $img.setAttribute("src", iconUrl);
-    var MAIN_TITLE = ("Open Source BB-Bot V3.2   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+    var MAIN_TITLE = ("Open Source BB-Bot V3.3   ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
     $text.innerText = MAIN_TITLE;
     $mode.innerText = mode;
     $status1.innerText = status;
@@ -195,41 +197,35 @@ function pleasewaitcompletedEventHandler (evt) {
 
 function instockEventHandler(evt) {
         // After pressing Add to Cart button we first wait for 5 seconds to get cart ready. In this time we will check if it shows please wait
+        // Add to Cart Button Classes Layers
+        var InStockButton;
+        const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
+        const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+
+        if (document.getElementsByClassName(InStockButton_L1).length == 1)
+        {
+             InStockButton = document.getElementsByClassName(InStockButton_L1);
+             console.log('instockEventHandler Button Class 1 : ' + InStockButton_L1)
+
+        } else if (document.getElementsByClassName(InStockButton_L2).length == 1) {
+
+            InStockButton = document.getElementsByClassName(InStockButton_L2);
+            console.log('instockEventHandler Button Class  2 :' + InStockButton_L2)
+
+        }
+
         setTimeout(function() {
-
-                //Code to run After timeout elapses
-                console.log('Waiting 10 Seconds to Get Cart Ready !!')
-
-                if (document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button").length == 0) {
-
-                        var CheckingInStockPressed = document.getElementsByClassName("c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button");
-                        CheckingInStockPressed[0].click()
-                        var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-                        soundData.play()
-                        setTimeout(function() {
-                                // Press secondary button
-                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
-                                GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                                GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
-                                // When a click event is detected for parsed element, please execute the function from uptop
-                                GotoCartButton[0].click(cartpageoperationsEvenHandler);
-                                GotoCartButton = null;
-                        }, 2000)
-
-                }
-
-                var PleaseWait = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
-
-                let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
-                console.log('Button Color Check : ' + MainButtonColor )
+         let MainButtonColor = window.getComputedStyle(InStockButton[0]).backgroundColor;
+        //Code to run After timeout elapses
+          console.log('Confirming Button Color : ' + MainButtonColor)
 
                 if (MainButtonColor === 'rgb(197, 203, 213)') {
 
-                        console.log('Lets check if its still Adding ..')
+                        console.log('Button Color Gray. Is it still Adding ?')
 
                         setTimeout(function() {
 
-                                var REALLY_PLEASE_WAIT = window.getComputedStyle(document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button")[0]).backgroundColor
+                                var REALLY_PLEASE_WAIT = window.getComputedStyle(document.getElementsByClassName(InStockButton)[0]).backgroundColor
 
                                 if (REALLY_PLEASE_WAIT === 'rgb(197, 203, 213)') {
 
@@ -335,6 +331,8 @@ function instockEventHandler(evt) {
                         }, 3000)
 
                 } else {
+                        var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
+                        soundData.play()
                         setTimeout(function() {
                                 // Press secondary button
                                 console.log('Level 1 | Blue Cart Button Appears')
@@ -344,7 +342,7 @@ function instockEventHandler(evt) {
                                 // When a click event is detected for parsed element, please execute the function from uptop
                                 GotoCartButton[0].click(cartpageoperationsEvenHandler);
                                 GotoCartButton = null;
-                        }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
+                        }, 3000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
 
                 }
 
@@ -383,27 +381,35 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         //Create Custom Badge
         //
         const $badge = createFloatingBadge("Auto Detecting Mode", "Initializing ..");
+        console.log('BEGIN ')
         document.body.appendChild($badge);
         $badge.style.transform = "translate(0, 0)"
         //Out of Stock Button
         //
-        var OOSButton ;
-        if (document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button").length == 1)
+        var OOSButton;
+        const OOSButton_L1 = "c-button c-button-disabled c-button-lg c-button-block add-to-cart-button"
+        const OOSButton_L2 = "btn btn-disabled btn-lg btn-block add-to-cart-button"
+        console.log('BEGIN ')
+        if (document.getElementsByClassName(OOSButton_L1).length == 1)
         {
-            OOSButton = document.getElementsByClassName("c-button c-button-disabled c-button-lg c-button-block add-to-cart-button");
-            console.log('Class ID 1 :' + OOSButton.length)
+            OOSButton = document.getElementsByClassName(OOSButton_L1);
+            console.log('OOS Button Class 1 : ' + OOSButton_L1)
         }
-        else
+        else if (document.getElementsByClassName(OOSButton_L2).length == 1)
         {
-            //btn btn-disabled btn-lg btn-block add-to-cart-button
-            OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
-            console.log('Class ID 2 :' + OOSButton.length)
+            OOSButton = document.getElementsByClassName(OOSButton_L2);
+            console.log('OOS Button Class 2 : ' + OOSButton_L2)
          }
-         console.log('Final Class ID:' + OOSButton.length)
+        else {
+
+         // When OOS is not found this will have 0 length. We need have value in OOSButton to move forward
+         OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
+
+         }
+
         // If Out of Stock Button is Found. Refresh
-        //
-    //
-        if (OOSButton.length > 0) {
+
+        if (OOSButton.length > 0 ) {
                 //
                 //
                 console.log('Out of Stock Button is Found: Just Refreshing !')
@@ -427,8 +433,24 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
         //
         else {
                 console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
-                // Add to Cart Button
-                var InStockButton = document.getElementsByClassName("btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button");
+
+                // Add to Cart Button Classes Layers
+                var InStockButton;
+                const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
+                const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+
+                if (document.getElementsByClassName(InStockButton_L1).length == 1)
+                {
+                     InStockButton = document.getElementsByClassName(InStockButton_L1);
+                     console.log('InStockButton Class ID 1 : ' + InStockButton_L1)
+
+                } else if (document.getElementsByClassName(InStockButton_L2).length == 1) {
+
+                    InStockButton = document.getElementsByClassName(InStockButton_L2);
+                    console.log('InStockButton Class ID 2 :' + InStockButton_L2)
+
+                }
+
                 //
                 // Checking if ATC button is found
                 if (InStockButton.length > 0)
@@ -452,7 +474,6 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                         {
                             // Wow we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
                             // It is said this this method reduces memory leaks
-
                             console.log('ATC button is yellow ! Pressing it ! ')
                             InStockButton[0].onclick = instockEventHandler;
                             InStockButton[0].addEventListener ("click", instockEventHandler, false);
