@@ -177,7 +177,7 @@ function pleasewaitcompletedEventHandler (evt) {
     setTimeout(function(){
 
             // Press secondary button
-            var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+            var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
             // Press go to cart
             GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
             GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
@@ -274,7 +274,7 @@ function instockEventHandler(evt) {
                                                                 // If available lets check add to cart button instanly
                                                                 // Press secondary button
                                                                 console.log("Checking bypass")
-                                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
                                                                 if (GotoCartButton.length > 0) {
                                                                         GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                                                         GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
@@ -318,7 +318,7 @@ function instockEventHandler(evt) {
                                         setTimeout(function() {
                                                 // Press secondary button
                                                 console.log('Level 2 | Blue Cart Button Appears')
-                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
                                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
                                                 // When a click event is detected for parsed element, please execute the function from uptop
@@ -336,7 +336,7 @@ function instockEventHandler(evt) {
                         setTimeout(function() {
                                 // Press secondary button
                                 console.log('Level 1 | Blue Cart Button Appears')
-                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block");
+                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
                                 // When a click event is detected for parsed element, please execute the function from uptop
@@ -348,7 +348,7 @@ function instockEventHandler(evt) {
 
 
 
-        }, 6000); //Two seconds will elapse and Code will execute.
+        }, 12000); //Two seconds will elapse and Code will execute.
         //
 }
 //________________________________________________________________________
