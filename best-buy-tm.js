@@ -571,7 +571,6 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
                 //document.getElementById("blah").src = "http://......"
                 // CVV Number of Saved Card
                 // Bug fix: by craz3drunner (discord member)
-                document.getElementById("cvv").value = CREDITCARD_CVV;
                 document.getElementById("cvv").focus();
                 document.getElementById("cvv").select();
                 if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
