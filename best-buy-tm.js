@@ -555,7 +555,7 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
     //
     //
     setTimeout(function() {
-        //We will verify that the item in final checout screen matches the Keyword so we don't have any issues when running multiple scripts for multiple keyword.
+        //We will verify that the item in final checkout screen matches the Keyword so we don't have any issues when running multiple scripts for multiple keyword.
         //In that case the Place Order button is clicked.
         //
         var CartItemCheck = document.getElementsByClassName("item-list__spacer text-left item-list__title");
