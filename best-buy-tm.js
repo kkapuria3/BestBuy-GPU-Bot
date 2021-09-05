@@ -195,9 +195,9 @@ function verificationpageEventHandler (evt) {
                         ContinueButton[0].click()
                         ContinueButton = null;
                     }
-                }, 2000)
+                }, 1500)
            }
-    }, 2000)
+    }, 2500)
 }
 
 //________________________________________________________________________
