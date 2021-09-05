@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      3.4
+// @version      3.5
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -34,6 +34,7 @@
 // - Easy edit button classes and better console logs.
 // 3.4 GotoCart Button Class Layers and some bug fixes
 // - Added check for CVV element to avoid error when element is not present
+// 3.5 Handler for entering last 4 digits for SMS verification
 //https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
 
 
@@ -65,6 +66,7 @@
 const ITEM_KEYWORD= "5600"; // NO SPACES IN KEYWORD - ONLY ONE WORD
 const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
 const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
+const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verification
 
 //____ PLEASE WAIT FLAGS : ADVANCED OPTIONS _____________________________
 
@@ -150,19 +152,52 @@ function cartpageoperationsEvenHandler (evt) {
                     //console.log(CartItemCheck[0])
                     //
                     //
-                    if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){
-                        //
-                        console.log('Item Has been Confirmed !')
-                        console.log('Click Checkout')
-                        var CheckoutButton = document.getElementsByClassName("btn btn-lg btn-block btn-primary");
-                        CheckoutButton[0].click()
-                        CheckoutButton = null ;
-
+                    if (CartItemCheck[0] != null) {
+                        if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){
+                            //
+                            console.log('Item Has been Confirmed !')
+                            console.log('Click Checkout')
+                            var CheckoutButton = document.getElementsByClassName("btn btn-lg btn-block btn-primary");
+                            CheckoutButton[0].click()
+                            CheckoutButton = null ;
+                        }
                     }
                 }, 3000 )//Three seconds will elapse and Code will execute.
 
             }
     }, 5000)
+}
+
+//________________________________________________________________________
+
+                     //    VERIFICATION PAGE EventHandler
+//________________________________________________________________________
+
+function verificationpageEventHandler (evt) {
+    console.log('Verification Step Reached')
+    setTimeout(function()
+    {
+            if (location.href.indexOf("identity/signin/recoveryOptions") > -1) {
+                //Create Custom Badge
+                //
+                const $badge = createFloatingBadge("Verification Page","Entering SMS Digits");
+                document.body.appendChild($badge);
+                $badge.style.transform = "translate(0, 0)"
+                setTimeout(function()
+                {
+                    var ContinueButton = document.getElementsByClassName("btn btn-secondary btn-lg btn-block c-button-icon c-button-icon-leading cia-form__controls__submit ");
+                    document.getElementById("smsDigits").focus();
+                    document.getElementById("smsDigits").select();
+                    if (!document.execCommand('insertText',false, SMS_DIGITS)) {
+                        document.getElementById("smsDigits").value = SMS_DIGITS;
+                    }
+                    if (ContinueButton.length == 1) {
+                        ContinueButton[0].click()
+                        ContinueButton = null;
+                    }
+                }, 2000)
+           }
+    }, 2000)
 }
 
 //________________________________________________________________________
@@ -428,6 +463,20 @@ if (location.href.includes("www.bestbuy.com/cart")) {
 
 }
 
+if (location.href.includes("https://www.bestbuy.com/site/customer/myaccount")) {
+        console.log('BEGIN ')
+        countdown (KEEP_ALIVE_TIME);
+        setTimeout(function() {
+            window.open(ITEM_URL);
+        }, 3000);
+}
+
+// Check for Verification Page
+else if (pagetitle.includes("Recovery")) {
+
+    verificationpageEventHandler();
+
+}
 
 if (pagetitle.includes(ITEM_KEYWORD)) {
 
@@ -526,14 +575,16 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
                         }
                         else
                         {
-                            // Wow we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
-                            // It is said this this method reduces memory leaks
-                            console.log('ATC button is yellow ! Pressing it ! ')
-                            InStockButton[0].onclick = instockEventHandler;
-                            InStockButton[0].addEventListener ("click", instockEventHandler, false);
-                            // When a click event is detected for parsed element, please execute the function from uptop
-                            InStockButton[0].click (instockEventHandler);
-
+                            // Adding timeout to prevent stalling when In Stock item is first loaded
+                            setTimeout(function() {
+                                // Now we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
+                                // It is said this this method reduces memory leaks
+                                console.log('ATC button is yellow ! Pressing it ! ')
+                                InStockButton[0].onclick = instockEventHandler;
+                                InStockButton[0].addEventListener ("click", instockEventHandler, false);
+                                // When a click event is detected for parsed element, please execute the function from uptop
+                                InStockButton[0].click (instockEventHandler);
+                            }, 2000)
                        }
 
 
