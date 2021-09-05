@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      3.3
+// @version      3.4
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -32,6 +32,8 @@
 // - If not Please Wait then 2nd ATC is triggered
 // 3.3 Button layers are reinforced
 // - Easy edit button classes and better console logs.
+// 3.4 GotoCart Button Class Layers and some bug fixes
+// - Added check for CVV element to avoid error when element is not present
 //https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
 
 
@@ -177,7 +179,20 @@ function pleasewaitcompletedEventHandler (evt) {
     setTimeout(function(){
 
             // Press secondary button
-            var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
+            var GotoCartButton;
+            const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
+            const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+
+            if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                                                {
+                 GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
+                 console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
+            } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                 GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
+                 console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+            }
+
             // Press go to cart
             GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
             GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
@@ -274,7 +289,20 @@ function instockEventHandler(evt) {
                                                                 // If available lets check add to cart button instanly
                                                                 // Press secondary button
                                                                 console.log("Checking bypass")
-                                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
+                                                                var GotoCartButton;
+                                                                const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
+                                                                const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+
+                                                                if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                                                {
+                                                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
+                                                                     console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
+                                                                } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
+                                                                     console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                                                }
+
                                                                 if (GotoCartButton.length > 0) {
                                                                         GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                                                         GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
@@ -318,7 +346,20 @@ function instockEventHandler(evt) {
                                         setTimeout(function() {
                                                 // Press secondary button
                                                 console.log('Level 2 | Blue Cart Button Appears')
-                                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
+                                                var GotoCartButton;
+                                                const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
+                                                const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+
+                                                if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                                {
+                                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
+                                                     console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
+                                                } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
+                                                     console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                                }
+
                                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
                                                 // When a click event is detected for parsed element, please execute the function from uptop
@@ -336,7 +377,20 @@ function instockEventHandler(evt) {
                         setTimeout(function() {
                                 // Press secondary button
                                 console.log('Level 1 | Blue Cart Button Appears')
-                                var GotoCartButton = document.getElementsByClassName("c-button c-button-secondary c-button-sm c-button-block");
+                                var GotoCartButton;
+                                const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
+                                const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+
+                                if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                {
+                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
+                                     console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
+                                } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                     GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
+                                     console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                }
+
                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
                                 // When a click event is detected for parsed element, please execute the function from uptop
@@ -501,32 +555,45 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
     //
     //
     setTimeout(function() {
+        //We will verify that the item in final checout screen matches the Keyword so we don't have any issues when running multiple scripts for multiple keyword.
+        //In that case the Place Order button is clicked.
         //
-        //document.getElementById("blah").src = "http://......"
-        // CVV Number of Saved Card
-        // Bug fix: by craz3drunner (discord member)
-        document.getElementById("cvv").value = CREDITCARD_CVV;
-        document.getElementById("cvv").focus();
-        document.getElementById("cvv").select();
-        if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
-            document.getElementById("cvv").value = CREDITCARD_CVV;
-        }
+        var CartItemCheck = document.getElementsByClassName("item-list__spacer text-left item-list__title");
+        //console.log(CartItemCheck[0])
+        //
+        //
+        if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){
+            //
+            console.log('Item Has been Confirmed !')
+            console.log('Click Place Order')
 
-            if(document.getElementById("text-updates") != null)
-            {
                 //
-                var TextUpdates = document.getElementById("text-updates").click()
-                //console.log(TextUpdates[0].checked)
-            }
-        if (TESTMODE === "No"){
-        //Is test mode is OFF go press place order button
-        //
-        console.log("we are here")
-        var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
-        //
+                //document.getElementById("blah").src = "http://......"
+                // CVV Number of Saved Card
+                // Bug fix: by craz3drunner (discord member)
+                document.getElementById("cvv").value = CREDITCARD_CVV;
+                document.getElementById("cvv").focus();
+                document.getElementById("cvv").select();
+                if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
+                    document.getElementById("cvv").value = CREDITCARD_CVV;
+                }
+
+                    if(document.getElementById("text-updates") != null)
+                    {
+                        //
+                        var TextUpdates = document.getElementById("text-updates").click()
+                        //console.log(TextUpdates[0].checked)
+                    }
+                if (TESTMODE === "No"){
+                //Is test mode is OFF go press place order button
+                //
+                console.log("we are here")
+                var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
+                //
+                }
+                //
+                //
         }
-        //
-        //
     }, 3000); //Three seconds will elapse and Code will execute.
 
 
