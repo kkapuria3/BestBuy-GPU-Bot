@@ -463,6 +463,7 @@ if (location.href.includes("www.bestbuy.com/cart")) {
 
 }
 
+// Refresh page if Sign In page is encountered to recheck for Verification Page
 if (pagetitle.includes("Sign In to Best Buy")) {
     setTimeout(function(){
         location.reload();
@@ -470,7 +471,7 @@ if (pagetitle.includes("Sign In to Best Buy")) {
 }
 
 // Check for Verification Page
-else if (pagetitle.includes("Recovery")) {
+if (pagetitle.includes("Recovery")) {
 
     verificationpageEventHandler();
 
