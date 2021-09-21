@@ -437,7 +437,7 @@ function instockEventHandler(evt) {
 
 
 
-        }, 12000); //Two seconds will elapse and Code will execute.
+        }, 2000); //Two seconds will elapse and Code will execute.
         //
 }
 //________________________________________________________________________
@@ -463,12 +463,10 @@ if (location.href.includes("www.bestbuy.com/cart")) {
 
 }
 
-if (location.href.includes("https://www.bestbuy.com/site/customer/myaccount")) {
-        console.log('BEGIN ')
-        countdown (KEEP_ALIVE_TIME);
-        setTimeout(function() {
-            window.open(ITEM_URL);
-        }, 3000);
+if (pagetitle.includes("Sign In to Best Buy")) {
+    setTimeout(function(){
+        location.reload();
+    }, 3000)
 }
 
 // Check for Verification Page
