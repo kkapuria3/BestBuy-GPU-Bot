@@ -622,11 +622,11 @@ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
                 //document.getElementById("blah").src = "http://......"
                 // CVV Number of Saved Card
                 // Bug fix: by craz3drunner (discord member)                
-                if(document.getElementById("cvv") != null) {
-                    document.getElementById("cvv").focus();
-                    document.getElementById("cvv").select();
+                if(document.getElementById("credit-card-cvv") != null) {
+                    document.getElementById("credit-card-cvv").focus();
+                    document.getElementById("credit-card-cvv").select();
                     if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
-                        document.getElementById("cvv").value = CREDITCARD_CVV;
+                        document.getElementById("credit-card-cvv").value = CREDITCARD_CVV;
                     }
                 }
 
