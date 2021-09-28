@@ -44,6 +44,7 @@
 
 //rgb(197, 203, 213) pleasewait
 //rgb(255, 224, 0) add to cart
+//rgb(0, 70, 190) verify your account
 
 /*
           (                            )           )
@@ -74,6 +75,7 @@ const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verificatio
 
 const QUEUE_TIME_CUTOFF = 0 // (in Minutes) Keep retrying until queue time is below.
 const NEW_QUEUE_TIME_DELAY = 5 // (in Seconds) Ask new queue time set seconds
+const OOS_REFRESH = 5 // (in Seconds) Refresh rate on OOS item.
 
 //____ LAZY FLAGS : WILL NOT AFFECT BOT PERFORMACE _____________________
 
@@ -405,8 +407,9 @@ function instockEventHandler(evt) {
                                                                     console.log(BetterTimeColor)
                                                                     if (BetterTimeColor === 'rgb(197, 203, 213)') {
                                                                             //console.log('refresh')
-                                                                            window.open(window.location.href, '_blank');
-                                                                            window.close();
+                                                                            //window.open(window.location.href, '_blank');
+                                                                            //window.close();
+                                                                            location.reload();
                                                                         }
                                                                 }
 
@@ -515,8 +518,10 @@ if (location.href.includes("www.bestbuy.com/cart")) {
 // Refresh page if Sign In page is encountered to recheck for Verification Page
 if (pagetitle.includes("Sign In to Best Buy")) {
     setInterval(function() {
-        if (pagetitle.includes("Recovery")) {
-            clearInterval();
+        console.log('Waiting for Sign in')
+        var Recovery_pagetitle = String(document.title);
+        if (Recovery_pagetitle.includes("Recovery")) {
+            verificationpageEventHandler();
         }
     }, 1000);
 }
@@ -578,7 +583,7 @@ if (pagetitle.includes(ITEM_KEYWORD)) {
 
                                          //
                                          //
-                }, 50*100);
+                }, OOS_REFRESH*1000);
 
         }
         // If Out of Stock Button is Not Found.
