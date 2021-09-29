@@ -339,8 +339,8 @@ function instockEventHandler(evt) {
                                                         //console.log(MainButtonColor);
                                                         console.log("Please Wait Button Detected :" + MainButtonColor + " | Lets keep trying ..");
 
-                                                        if (MainButtonColor === 'rgb(255, 224, 0)') {
-                                                                // Color of Button Changes to yellow then click again
+                                                        if (MainButtonColor === 'rgb(255, 224, 0)' || MainButtonColor === 'rgb(0, 70, 190)') {
+                                                                // Color of Button Changes to yellow or blue for Verify then click again
                                                                 let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
                                                                 // When button turns yellow, we scream bagged !
                                                                 console.log("Add to Cart is available:" + ATC_Color + " | Lets Bag This ! ");
