@@ -577,9 +577,9 @@
                          document.body.appendChild($badge);
                          setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 0);
  
-                     //window.open(window.location.href, '_blank');
-                     //window.close();
-                     location.reload(); // This command here blows up your memory
+                     window.open(window.location.href, '_blank');
+                     window.close();
+                     //location.reload(); // This command here blows up your memory
  
                                           //
                                           //
