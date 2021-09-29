@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name     BestBuy-RefreshNoBot-5700G
+// @name     BestBuy-RefreshNoBot
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
