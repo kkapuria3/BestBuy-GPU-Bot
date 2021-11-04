@@ -237,22 +237,28 @@
              const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
              const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
  
-             if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+             if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                                  {
                   GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
                   console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
-             } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+             } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                   GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                   console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
  
              }
  
              // Press go to cart
-             GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-             GotoCartButton[0].addEventListener ("click", cartpageoperationsEvenHandler, false);
-             // When a click event is detected for parsed element, please execute the function from uptop
-             GotoCartButton[0].click (cartpageoperationsEvenHandler);
-             GotoCartButton = null ;
+             if (GotoCartButton != null) {
+                for (var i=0;i<GotoCartButton.length; i++) {
+                    if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
+                        GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
+                        GotoCartButton[i].addEventListener ("click", cartpageoperationsEvenHandler, false);
+                        // When a click event is detected for parsed element, please execute the function from uptop
+                        GotoCartButton[i].click (cartpageoperationsEvenHandler);
+                        GotoCartButton = null ;
+                    }
+                }
+             }
  
      }, 4000)
  }
@@ -271,12 +277,12 @@
          const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
          const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
  
-         if (document.getElementsByClassName(InStockButton_L1).length == 1)
+         if (document.getElementsByClassName(InStockButton_L1).length > 0)
          {
               InStockButton = document.getElementsByClassName(InStockButton_L1);
               console.log('instockEventHandler Button Class 1 : ' + InStockButton_L1)
  
-         } else if (document.getElementsByClassName(InStockButton_L2).length == 1) {
+         } else if (document.getElementsByClassName(InStockButton_L2).length > 0) {
  
              InStockButton = document.getElementsByClassName(InStockButton_L2);
              console.log('instockEventHandler Button Class  2 :' + InStockButton_L2)
@@ -379,23 +385,26 @@
                                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
  
-                                                                 if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                                                 if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                                  {
                                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
                                                                       console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
-                                                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
  
                                                                  }
  
                                                                  if (GotoCartButton != null) {
-                                                                         GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                                                                         GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
-                                                                         // When a click event is detected for parsed element, please execute the function from uptop
-                                                                         GotoCartButton[0].click(cartpageoperationsEvenHandler);
-                                                                         GotoCartButton = null;
-                                                                         //
+                                                                    for (var i=0;i<GotoCartButton.length; i++) {
+                                                                        if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
+                                                                            GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
+                                                                            GotoCartButton[i].addEventListener ("click", cartpageoperationsEvenHandler, false);
+                                                                            // When a click event is detected for parsed element, please execute the function from uptop
+                                                                            GotoCartButton[i].click (cartpageoperationsEvenHandler);
+                                                                            GotoCartButton = null ;
+                                                                        }
+                                                                    }
                                                                  }
  
                                                                  /*const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
@@ -439,21 +448,27 @@
                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
  
-                                                 if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                                 if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                  {
                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
                                                       console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
-                                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
  
                                                  }
  
-                                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
-                                                 // When a click event is detected for parsed element, please execute the function from uptop
-                                                 GotoCartButton[0].click(cartpageoperationsEvenHandler);
-                                                 GotoCartButton = null;
+                                                 if (GotoCartButton != null) {
+                                                    for (var i=0;i<GotoCartButton.length; i++) {
+                                                        if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
+                                                            GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
+                                                            GotoCartButton[i].addEventListener ("click", cartpageoperationsEvenHandler, false);
+                                                            // When a click event is detected for parsed element, please execute the function from uptop
+                                                            GotoCartButton[i].click (cartpageoperationsEvenHandler);
+                                                            GotoCartButton = null ;
+                                                        }
+                                                    }
+                                                 }
                                          }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
  
                                  }
@@ -470,21 +485,27 @@
                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
  
-                                 if (document.getElementsByClassName(GotoCartButton_L1).length == 1)
+                                 if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                  {
                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
                                       console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
-                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length == 1) {
+                                 } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
  
                                  }
  
-                                 GotoCartButton[0].onclick = cartpageoperationsEvenHandler;
-                                 GotoCartButton[0].addEventListener("click", cartpageoperationsEvenHandler, false);
-                                 // When a click event is detected for parsed element, please execute the function from uptop
-                                 GotoCartButton[0].click(cartpageoperationsEvenHandler);
-                                 GotoCartButton = null;
+                                 if (GotoCartButton != null) {
+                                    for (var i=0;i<GotoCartButton.length; i++) {
+                                        if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
+                                            GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
+                                            GotoCartButton[i].addEventListener ("click", cartpageoperationsEvenHandler, false);
+                                            // When a click event is detected for parsed element, please execute the function from uptop
+                                            GotoCartButton[i].click (cartpageoperationsEvenHandler);
+                                            GotoCartButton = null ;
+                                        }
+                                    }
+                                 }
                          }, 3000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
  
                  }
