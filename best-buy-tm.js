@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      3.6
+// @version      3.7
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -38,6 +38,8 @@
 //https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
 // 3.6 Added several Button Class Layers and updated to click new Verify Your Account button
 // - Updated NEW_QUEUE_TIME_DELAY flag to change how often new queue time is requested
+// 3.7 Removed Nerdspeak Integration
+// - Commented out Nerdspeak Integration due to possible account flagging by Best Buy causing queue looping
 
 
 // ==/UserScript==
@@ -69,12 +71,12 @@
  const ITEM_KEYWORD= "5700"; // NO SPACES IN KEYWORD - ONLY ONE WORD
  const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
  const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
- const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verification
+ const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verification (optional)
  
  //____ PLEASE WAIT FLAGS : ADVANCED OPTIONS _____________________________
  
- const QUEUE_TIME_CUTOFF = 0 // (in Minutes) Keep retrying until queue time is below.
- const NEW_QUEUE_TIME_DELAY = 5 // (in Seconds) Ask new queue time set seconds
+ //const QUEUE_TIME_CUTOFF = 0 // (in Minutes) Keep retrying until queue time is below.
+ //onst NEW_QUEUE_TIME_DELAY = 5 // (in Seconds) Ask new queue time set seconds
  const OOS_REFRESH = 10 // (in Seconds) Refresh rate on OOS item.
  
  //____ LAZY FLAGS : WILL NOT AFFECT BOT PERFORMACE _____________________
@@ -102,7 +104,7 @@
      $link.setAttribute("target", "_blank");
      $link.setAttribute("title", "RefreshNoBot");
      $img.setAttribute("src", iconUrl);
-     var MAIN_TITLE = ("Open Source BB-Bot V3.6  ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+     var MAIN_TITLE = ("Open Source BB-Bot V3.7  ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
      $text.innerText = MAIN_TITLE;
      $mode.innerText = mode;
      $status1.innerText = status;
@@ -307,7 +309,7 @@
                                          // Run this every 5 seconds
                                          setInterval(function() {
                                                  //Parsing New Time Button
-                                                 var xpathBetterTime = "//button[text()='Get New Queue Time']";
+                                                 /*var xpathBetterTime = "//button[text()='Get New Queue Time']";
                                                  var BetterTime = document.evaluate(xpathBetterTime, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                                                  //Parsing Time Remaining on Queue
                                                  var xpathtime = "//p[text()='Time Remaining:']";
@@ -315,7 +317,7 @@
                                                  var TRIES = ("Request New Queue Time : " + NEW_QUEUE_TIME_DELAY + " Seconds ◻️ Minimum Queue Time Cut-off: " + QUEUE_TIME_CUTOFF + " Mins ◻️ " + time + " ◻️  Retry Count: " + RETRY_COUNT + " ◻️  Queue Try Count: " + QUEUE_TRY_COUNT);
                                                  const $badge = createFloatingBadge(MODE, TRIES);
                                                  document.body.appendChild($badge);
-                                                 $badge.style.transform = "translate(0, 0)"
+                                                 $badge.style.transform = "translate(0, 0)"*/
                                                  // Run this every 20 seconds
                                                  setTimeout(function() {
  
@@ -396,7 +398,7 @@
                                                                          //
                                                                  }
  
-                                                                 const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
+                                                                 /*const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
                                                                  const found = time.match(regex);
                                                                  console.log(found[0])
                                                                  if ((found[0] > QUEUE_TIME_CUTOFF) && (RETRY_QUEUE_COUNT < RETRY_COUNT)) {
@@ -411,7 +413,7 @@
                                                                                  //window.close();
                                                                                  location.reload();
                                                                          }
-                                                                 }
+                                                                 }*/
  
  
                                                          }
