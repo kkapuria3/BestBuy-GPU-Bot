@@ -144,6 +144,17 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* Button classes layered into 'if else' loops
 	* When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
 	* If not Please Wait then 2nd ATC is triggered
+* 3.3 Button layers are reinforced
+	* Easy edit button classes and better console logs.
+* 3.4 GotoCart Button Class Layers and some bug fixes
+	* Added check for CVV element to avoid error when element is not present
+* 3.5 Handler for entering last 4 digits for SMS verification
+	* https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to
+* 3.6 Added several Button Class Layers and updated to click new Verify Your Account button
+	* Updated NEW_QUEUE_TIME_DELAY flag to change how often new queue time is requested
+* 3.7 Removed Nerdspeak Integration
+	* Commented out Nerdspeak Integration due to possible account flagging by Best Buy causing queue looping
+
 
 ## License
 
