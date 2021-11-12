@@ -67,7 +67,8 @@ I built this in response to the severe tech scalping situation that's happening 
 
 ### Further Details
 
-* Item Keyword corresponds to a keyword in your product name (no spaces allowed)
+* Item Keyword corresponds to a keyword in your product name ( case sensitive | no spaces allowed )
+	*_you can retrive ITEM_KEYWORD from the Black Title on a specific Products Page_*
 ```
 const ITEM_KEYWORD= "3060";
 ```
