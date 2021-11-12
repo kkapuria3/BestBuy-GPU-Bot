@@ -4,7 +4,7 @@
 
 <br>
 
-* **Only Works With _Google Chrome_** (Support for other browsers will be released in future versions)
+* **_Works with all/any of the Browsers_**
 
 ```
 I took bits from best open and closed sourced bots and made this simple bot.
@@ -43,15 +43,13 @@ I built this in response to the severe tech scalping situation that's happening 
 
 ### Dependencies
 
-1. Install [Nerd Speak Extention](https://nerdspeak.net/tech/nerdspeak-stock-helper-extension/)
-2. Install [Tampermonkey Extention](https://www.tampermonkey.net/)
-3. BestBuy Account (Please be signed in) 
-4. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
+1. Install [Tampermonkey Extention](https://www.tampermonkey.net/)
+2. BestBuy Account (Please be signed in) 
+3. Please allow [Pop-Ups](https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows) for ```https://www.bestbuy.com/``` in your browser
 
 
 ### Installing
 
-* Successfully download and install both extensions in your browser
 * Go to tampermonkey dashboard from broswer extension and create a new script
 * Delete all the contents and copy full code from [best-buy-tm.js](https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js)
 * Save the script
@@ -60,9 +58,9 @@ I built this in response to the severe tech scalping situation that's happening 
 <img src="resources/flags.gif">
 
 
-### Testing
+### Testing (Best Buy has disabled `Please Wait` testing - 08/24/2021)
 
-* Use these product links to test the BOT (Best Buy has disabled `Please Wait` testing - 08/24/2021)
+* Use these product links to test the BOT 
 * [AMD - Ryzen 5 5600X](https://www.bestbuy.com/site/amd-ryzen-5-5600x-4th-gen-6-core-12-threads-unlocked-desktop-processor-with-wraith-stealth-cooler/6438943.p?skuId=6438943)
 * [AMD - Ryzen 7 5800X](https://www.bestbuy.com/site/amd-ryzen-7-5800x-4th-gen-8-core-16-threads-unlocked-desktop-processor-without-cooler/6439000.p?skuId=6439000)
 
@@ -81,6 +79,11 @@ const CREDITCARD_CVV = "***";
 ```
 const TESTMODE = "Yes"
 ``` 
+* Enter last 4 digits of phone # for SMS verification (optional)
+```
+const SMS_DIGITS = "****"
+``` 
+
 
 ## Workflow
 
