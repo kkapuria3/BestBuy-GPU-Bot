@@ -1,6 +1,6 @@
 <img src="resources/new_logo.gif">
 
-[![Discord](https://img.shields.io/discord/863863008329596968?color=%237289da%20&label=FOR%20SUPPORT%20AND%20FAQs%20%20%7C%20JOIN%20DISCORD&style=for-the-badge)](https://discord.gg/UcxcyxS5X8)
+[![Discord](https://img.shields.io/discord/863863008329596968?color=%237289da%20&label=FOR%20SUPPORT%20AND%20FAQs%20%20%7C%20JOIN%20DISCORD&style=for-the-badge)](https://discord.gg/wkznBbgBFD)
 
 <br>
 
