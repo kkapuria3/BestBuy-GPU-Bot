@@ -54,7 +54,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 <img src="resources/flags.gif">
 
-### [Youtube Video Tutorial] (https://www.youtube.com/watch?v=UL6tzc1gPmM)
+### [Youtube Video Tutorial](https://www.youtube.com/watch?v=UL6tzc1gPmM)
 
 ### Testing/Strategies
 
