@@ -1,0 +1,10 @@
+{
+    "name": "Open Source Bots - BestBuy Bot",
+    "short_name": "BB-Bot",
+    "description": "Github Page as a Progressive Web App",
+    "scope": "/BestBuy-GPU-Bot/",
+    "start_url": "/BestBuy-GPU-Bot/",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "display": "standalone"
+  }

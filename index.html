@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub page as PWA template</title>
+  <link rel="canonical" href="https://kkapuria3.github.io/BestBuy-GPU-Bot/" />
+  <link rel="manifest" href="/BestBuy-GPU-Bot/manifest.webmanifest">
+</head>
+<body>
+    <p><a href="https://github.com/kkapuria3/BestBuy-GPU-Bot"><img src="https://github.com/kkapuria3/BestBuy-GPU-Bot/raw/main/resources/new_logo.gif" width="350"/></a> 
+        <br><br><br>
+        <a href="https://discord.gg/wkznBbgBFD"><img src="https://img.shields.io/discord/863863008329596968?color=%237289da%20&amp;label=FOR%20SUPPORT,%20FAQS%20AND%20BOT-Strategy%20%20%7C%20JOIN%20DISCORD&amp;style=for-the-badge" alt="Discord"></a>
+        <br><br><br></p>
+        <ul>
+        <li><strong><em>Works with all/any of the browsers, but we recommend using Firefox with multi-account containers extension</em></strong>
+        <br><br><br></li>
+        </ul>
+        <pre><code>
+        I took <span class="hljs-keyword">bits </span>from <span class="hljs-keyword">best </span>open <span class="hljs-keyword">and </span><span class="hljs-keyword">closed </span>sourced <span class="hljs-keyword">bots </span><span class="hljs-keyword">and </span>made this simple <span class="hljs-keyword">bot.
+        </span>Please star my repo if this contribution helped you ! Its FREEE !
+        
+        ** CREDIT CARD INFORMATION IS NOT USED. <span class="hljs-keyword">BOT </span>WILL ALSO RUN WITHOUT CVV INFORMATION<span class="hljs-comment">; just not do FINAL CHECKOUT</span>
+        
+        Please <span class="hljs-keyword">Join </span>Support &amp; FAQ <span class="hljs-keyword">Discord </span>if you have questions.
+        </code></pre><h1 id="bestbuy-bot-open-source-gpu-ps5-xbox-bot">BestBuy Bot — Open Source GPU/PS5/Xbox Bot</h1>
+        <h2 id="description">Description</h2>
+        <p>BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can search an item repeatedly on the item page using one keyword. Once the desired item is available it can add to cart and checkout very fast. This auto purchasing BestBuy Bot can work on Firefox Browser so it can run in all Operating Systems. It can run for multiple items simultaneously.</p>
+        <p>&quot;Running a bot can increase your success chances only ; but does not guarantee that you will successfully cart each time. If you do not agree, then please do not use this code.&quot;</p>
+        <h2 id="why-">Why???</h2>
+        <p>I built this in response to the severe tech scalping situation that&#39;s happening right now. Almost every tech product that&#39;s coming out right now is being instantly brought out by scalping groups and then resold at at insane prices. $699 GPUs are being listed for $1700 on eBay, and these scalpers are buying 40 carts while normal consumers can&#39;t get a single one. Preorders for the PS5 are being resold for nearly $1000. My take on this is that if I release a bot that anyone can use, for free, then the number of items that scalpers can buy goes down and normal consumers can buy items for MSRP. If everyone is botting, then no one is botting.</p>
+        <h2 id="getting-started">Getting Started</h2>
+        <ol>
+        <li>Create a <a href="https://github.com/login?return_to=%2Fkkapuria3">github</a> account. It always helps !</li>
+        <li>Star this repository. Its FREE !</li>
+        <li>Please follow me here if you like my contribution: <a href="https://github.com/kkapuria3"><img src="https://p.kindpng.com/picc/s/726-7262336_deadpool-logo-pixel-art-hd-png-download.png" width="25"/></a></li>
+        </ol>
+        <h3 id="dependencies">Dependencies</h3>
+        <ol>
+        <li>Install <a href="https://www.tampermonkey.net/">Tampermonkey Extention</a></li>
+        <li>BestBuy Account (Please be signed in) </li>
+        <li>Please allow <a href="https://www.isc.upenn.edu/how-to/configuring-your-web-browser-allow-pop-windows">Pop-Ups</a> for <code>https://www.bestbuy.com/</code> in your browser</li>
+        </ol>
+        <h3 id="installing">Installing</h3>
+        <ul>
+        <li>Go to tampermonkey dashboard from broswer extension and create a new script</li>
+        <li>Delete all the contents and copy full code from <a href="https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js">best-buy-tm.js</a></li>
+        <li>Save the script</li>
+        <li>Updated REQUIRED FLAGS to your specifications</li>
+        </ul>
+        <p><img src="https://github.com/kkapuria3/BestBuy-GPU-Bot/raw/main/resources/flags.gif"></p>
+        <h3 id="youtube-video-tutorial">Youtube Video Tutorial</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/UL6tzc1gPmM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        
+        <h3 id="testing-strategies">Testing/Strategies</h3>
+        <p>Since BestBuy has queue system for when GPU/Consoles drop, testing bot is impossible outside the actual drop.
+        Its recommended to run the bot during/before the drop as drops occurs in waves over few mins to hours.</p>
+        <h3 id="further-details">Further Details</h3>
+        <ul>
+        <li>Item Keyword corresponds to a keyword in your product name ( case sensitive | no spaces allowed )
+          <em>_you can retrive ITEM<em>KEYWORD from the Black Title on a specific Products Page</em></em><pre><code>const ITEM_KEYWORD= <span class="hljs-string">"3060"</span><span class="hljs-comment">;</span>
+        </code></pre></li>
+        <li>Credit Card CVV  (Not Required. BOT just wont do final checkout)<pre><code>const CREDITCARD_CVV = <span class="hljs-string">"***"</span><span class="hljs-comment">;</span>
+        </code></pre></li>
+        <li>Test Mode &quot;YES&quot; will not purchase item. But do all the steps except pressing the last button. <code>TESTMODE = &quot;No&quot;</code> will purchase the item.<pre><code><span class="hljs-keyword">const</span> TESTMODE = <span class="hljs-string">"Yes"</span>
+        </code></pre></li>
+        <li>Enter last 4 digits of phone # for SMS verification (optional)<pre><code><span class="hljs-keyword">const</span> SMS_DIGITS = <span class="hljs-string">"****"</span>
+        </code></pre></li>
+        </ul>
+        <h2 id="workflow">Workflow</h2>
+        <p>This tool is designed to multitask. That means, it can run in many tabs simultaneously, if there is a <code>ITEM_KEYWORD</code> overlap.
+        If there is no <code>ITEM_KEYWORD</code> overlap. You will need to create a new copy of script for each <code>ITEM_KEYWORD</code>.</p>
+        <p>Please make sure your CART is empty.</p>
+        <p>After updating variables and enabling the script in Tampermonkey, go to the your favourite GPU page in BestBuy.
+        If the Title of GPU has <code>ITEM_KEYWORD</code>, it will add the item to cart and checkout. If item is out of stock it will keep on refreshing every 5 seconds.</p>
+        <p>Please use <code>TESTMODE = &quot;Yes&quot;</code> to test with an item already in stock.</p>
+        <h2 id="authors">Authors</h2>
+        <ul>
+        <li>Karan Kapuria</li>
+        </ul>
+        <p><a href="https://www.buymeacoffee.com/kapuriakaran" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a></p>
+        <h2 id="version-history-and-changelog">Version History and Changelog</h2>
+        <ul>
+        <li>1.0 Initial Release </li>
+        <li>1.1 Handle Please Wait Gracefully<ul>
+        <li>If Please Wait button shows up, bot will check every for second ATC button every 20 seconds</li>
+        <li>Whenever second ATC button appears, it will click and checkout</li>
+        <li>Reading Logs in Console</li>
+        </ul>
+        </li>
+        <li>2.0 - &#39;Please Wait...&#39; items can now be CARTED and CHECKEDOUT<ul>
+        <li>If &quot;Please Wait&quot; button shows up, it will enter a loop of retries which will check the color of button.</li>
+        <li>As long as button stays Gray, it will try and check for Yellow Color</li>
+        <li>Whenever Yellow ATC button appears again, it will click and checkout</li>
+        <li>Status Bar is now being added at bottom</li>
+        <li>Status Bar now shows version and TESTMODE variable    </li>
+        </ul>
+        </li>
+        <li>2.5 - &#39;Fixed Memory Leak&#39; no more refresh ! We will recycle tabs.<ul>
+        <li>Due to constant reloading of OOS items, memory on your browser slowly blows up</li>
+        <li>We will now kill the tab if item is OOS and open it in new page. Doing this infact reduces the total RAM usage.</li>
+        <li>Button clicks no more use .click() but instead use EventListeners()</li>
+        <li>Status Bar is now 50% of screen.  Little taller so last line is visible when page is loading.</li>
+        <li>Status Bar now shows ITEM_KEYWORD</li>
+        <li>We will now play a music when item is carted.</li>
+        <li>Since BB asks for verifying account sometimes. Alert will help so that you dont miss checkout.</li>
+        <li>MAX_RETRIES will now control when your page gets reloaded when you are stuck on please wait screen. In this case it will perform normal reload.</li>
+        </ul>
+        </li>
+        <li>3.0 -  Conjuction with &#39;Nerd Speak&#39; Extension<pre><code>* MAJOR CHANGE: BOT ONLY WORKS FOR CHROME NOW (Version <span class="hljs-number">2.5</span> <span class="hljs-keyword">and</span> older are all browser compatible)
+        * Bot will now extract queue <span class="hljs-built_in">time</span> <span class="hljs-keyword">from</span> NS extension
+        * QUEUE_TIME_CUTOFF will keep requesting better queue <span class="hljs-keyword">times</span> <span class="hljs-keyword">until</span> target value <span class="hljs-keyword">is</span> reached
+        * NEW_QUEUE_TIME_DELAY <span class="hljs-keyword">is</span> <span class="hljs-built_in">delay</span> <span class="hljs-keyword">in</span> seconds <span class="hljs-keyword">between</span> requesting new queue <span class="hljs-keyword">times</span>.
+        * Status Bar <span class="hljs-keyword">is</span> <span class="hljs-number">75</span>px fixed
+        * Status Bar now shows more information
+        * Since BB asks <span class="hljs-keyword">for</span> verifying account sometimes. Alert will help so <span class="hljs-keyword">that</span> you dont miss checkout.
+        * MAX_RETRIES will be deprecated <span class="hljs-keyword">in</span> future.    
+        </code></pre></li>
+        <li>3.1 Best Buy disabled 5800-5600x tests<ul>
+        <li>Best Buy has disabled &#39;Please Wait&#39; testing for 5600-5800 , they also updated their button classes.</li>
+        <li>I have Added extra layer of code which will handle for new button classes.</li>
+        <li><code>Please Wait</code> functionality should still work if layer we added is not activated.</li>
+        </ul>
+        </li>
+        <li>3.2 Extra Button Class Layers Added<ul>
+        <li>Button classes layered into &#39;if else&#39;  loops</li>
+        <li>When 1st ATC is pressed. &#39;Adding..&#39; takes about 4-6 seconds. We double check gray color for &#39;Please Wait&#39;.</li>
+        <li>If not Please Wait then 2nd ATC is triggered</li>
+        </ul>
+        </li>
+        <li>3.3 Button layers are reinforced<ul>
+        <li>Easy edit button classes and better console logs.</li>
+        </ul>
+        </li>
+        <li>3.4 GotoCart Button Class Layers and some bug fixes<ul>
+        <li>Added check for CVV element to avoid error when element is not present</li>
+        </ul>
+        </li>
+        <li>3.5 Handler for entering last 4 digits for SMS verification<ul>
+        <li><a href="https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to">https://stackoverflow.com/questions/49509874/how-can-i-develop-my-userscript-in-my-favourite-ide-and-avoid-copy-pasting-it-to</a></li>
+        </ul>
+        </li>
+        <li>3.6 Added several Button Class Layers and updated to click new Verify Your Account button<ul>
+        <li>Updated NEW_QUEUE_TIME_DELAY flag to change how often new queue time is requested</li>
+        </ul>
+        </li>
+        <li>3.7 Removed Nerdspeak Integration<ul>
+        <li>Commented out Nerdspeak Integration due to possible account flagging by Best Buy causing queue looping</li>
+        </ul>
+        </li>
+        <li>4.0 BB Queue Timer and Sign-In on Container tabs<ul>
+        <li>Added QueueTimer Functions - Queue Timer is now shown on bot UI during please wait</li>
+        <li>Increase Verfication Time from 1.5 - 2.5s</li>
+        <li>Automatic 5 seconds signin after cart when running on private container tabs</li>
+        <li>QueueTimer Functions gets called when really please wait is detected</li>
+        <li>Updated Bot Messages </li>
+        </ul>
+        </li>
+        </ul>
+        <h2 id="license">License</h2>
+        <p>This project is licensed under the MIT License - see the LICENSE.md file for details</p>        
+
+<!--   <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/github-page-pwa/sw.js',
+          {scope: '/github-page-pwa/'}
+        )
+      }
+  </script> -->
+</body>
+</html>

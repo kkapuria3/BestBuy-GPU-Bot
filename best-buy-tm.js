@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      3.7
+// @version      4.0
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -40,7 +40,12 @@
 // - Updated NEW_QUEUE_TIME_DELAY flag to change how often new queue time is requested
 // 3.7 Removed Nerdspeak Integration
 // - Commented out Nerdspeak Integration due to possible account flagging by Best Buy causing queue looping
-
+// 4.0 BB Queue Timer and Sign-In on Container tabs
+// - Added QueueTimer Functions - Queue Timer is now shown on bot UI during please wait
+// - Increase Verfication Time from 1.5 - 2.5s
+// - Automatic 5 seconds signin after cart when running on private container tabs
+// - QueueTimer Functions gets called when really please wait is detected
+// - Updated Bot Messages 
 
 // ==/UserScript==
 
@@ -61,35 +66,102 @@
                                                                   */
  "use strict";
  //________________________________________________________________________
- 
+
                         //  CONSTANTS
      // [ Do not add/remove quotation marks when updating]
  //________________________________________________________________________
- 
+
  //____ REQUIRED FLAGS ____________________________________________________
- 
- const ITEM_KEYWORD= "5700"; // NO SPACES IN KEYWORD - ONLY ONE WORD
+
+ const ITEM_KEYWORD= "PNY"; // NO SPACES IN KEYWORD - ONLY ONE WORD
  const CREDITCARD_CVV = "***"; // BOT will run without changing this value.
  const TESTMODE = "Yes"; // TESTMODE = "No" will buy the card
- const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verification (optional)
- 
+ const SMS_DIGITS = "****"; // Enter last 4 digits of phone # for SMS verification (required for verification)
+
  //____ PLEASE WAIT FLAGS : ADVANCED OPTIONS _____________________________
- 
+
  //const QUEUE_TIME_CUTOFF = 0 // (in Minutes) Keep retrying until queue time is below.
  //onst NEW_QUEUE_TIME_DELAY = 5 // (in Seconds) Ask new queue time set seconds
  const OOS_REFRESH = 10 // (in Seconds) Refresh rate on OOS item.
- 
+
  //____ LAZY FLAGS : WILL NOT AFFECT BOT PERFORMACE _____________________
- 
- const MAX_RETRIES = "200" // Fossil of EARTH
- 
- //
+
+ const MAX_RETRIES = "500" // Fossil of EARTH
+
  //________________________________________________________________________
- 
+
+                  // Queue Timer Functions
+ //________________________________________________________________________
+
+function n(e, t) {
+     return parseInt(e, t)
+ }
+
+function r(e, t) {
+    return e[t]
+}
+
+function getQueueTimeFromEncodedString(e) {
+    var t = ("-", e.split("-")),
+        l = t.map((function (e) {
+            return n(e, 16)
+        }));
+    return function (e) {
+        return 1e3 * e
+    }(function (e, t) {
+        return e / t
+    }(n(function (e, t) {
+        return e + t
+    }(r(t, 2), r(t, 3)), 16), r(l, 1)))
+}
+
+function getRecordForSku(sku){
+    const queues= JSON.parse(atob(localStorage.getItem('purchaseTracker')));
+    console.log(queues);
+
+    const skuQueue = queues[sku];
+    if(!skuQueue){
+        return null;
+    }
+    return skuQueue;
+}
+
+function getQueueTimeStartMs(sku){
+    return getRecordForSku(sku)[0];
+}
+
+function getQueueDurationMs(sku){
+    return getQueueTimeFromEncodedString(getRecordForSku(sku)[2]);
+}
+
+var sku = location.search.split('=')[1];
+console.log('found sku', sku);
+
+// This function will be called when Please wait is detected to return queue time
+     let checkQueueTimeRemaining = () => {
+         try {
+             var startMs = getQueueTimeStartMs(sku);
+             var durationMs = getQueueDurationMs(sku);
+             var durationMin = Math.trunc(durationMs / 60000);
+             var durationSec = Math.trunc((durationMs / 1000) - (durationMin * 60));
+             var remainingMs = startMs + durationMs - new Date().getTime();
+             var remainingMin = Math.trunc(remainingMs / 60000);
+             var remainingSec = Math.trunc((remainingMs / 1000) - (remainingMin * 60));
+
+             return [remainingMin, remainingSec]
+
+
+         } catch (e) {
+         }
+     };
+
+ //________________________________________________________________________
+
                   // Create Floating Status Bar
  //________________________________________________________________________
- 
+
  function createFloatingBadge(mode,status) {
+
      const iconUrl = "https://kkapuria3.github.io/images/KK.png";
      const $container = document.createElement("div");
      const $bg = document.createElement("div");
@@ -98,17 +170,17 @@
      const $text = document.createElement("P");
      const $mode = document.createElement("P");
      const $status1 = document.createElement("P");
- 
- 
+
+
      $link.setAttribute("href", "https://github.com/kkapuria3");
      $link.setAttribute("target", "_blank");
      $link.setAttribute("title", "RefreshNoBot");
      $img.setAttribute("src", iconUrl);
-     var MAIN_TITLE = ("Open Source BB-Bot V3.7  ◻️   TESTMODE: " +TESTMODE + "   ◻️   ITEM KEYWORD: " + ITEM_KEYWORD);
+     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.0 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
      $text.innerText = MAIN_TITLE;
      $mode.innerText = mode;
      $status1.innerText = status;
- 
+
      $container.style.cssText = "position:fixed;left:0;bottom:0;width:850px;height:75px;background: black;";
      $bg.style.cssText = "position:absolute;left:-100%;top:0;width:60px;height:55px;background:#1111;box-shadow: 0px 0 10px #060303; border: 1px solid #FFF;";
      $link.style.cssText = "position:absolute;display:block;top:11px;left: 0px; z-index:10;width: 50px;height:50px;border-radius: 1px;overflow:hidden;";
@@ -116,38 +188,39 @@
      $text.style.cssText = "position:absolute;display:block;top:3px;left: 50px;background: transperant; color: white;";
      $mode.style.cssText = "position:absolute;display:block;top:22px;left: 50px;background: transperant; color: white;";
      $status1.style.cssText = "position:absolute;display:block;top:43px;left: 50px;background: transperant; color: white;";
-     //
-     //
+
+
      $link.appendChild($img);
      $container.appendChild($bg);
      $container.appendChild($link);
      $container.appendChild($text);
      $container.appendChild($mode);
      $container.appendChild($status1)
+
      return $container;
  }
- 
+
  //________________________________________________________________________
- 
+
      //  FUNCTIONS | Writing seperate EventHandlers so we can prevent memory leak for long running bots
  //________________________________________________________________________
- 
+
  // Ideas developed based on : https://stackoverflow.com/questions/13677589/addeventlistener-memory-leak-due-to-frames/13702786#13702786
  //________________________________________________________________________
- 
+
                       //    CART PAGE EventHandler
  //________________________________________________________________________
- 
+
  function cartpageoperationsEvenHandler (evt) {
      setTimeout(function()
      {
              if (location.href.includes("www.bestbuy.com/cart")) {
                  //Create Custom Badge
                  //
-                 const $badge = createFloatingBadge("Cart Page","Verfying 1st item in cart has KEYWORD");
+                 const $badge = createFloatingBadge("Cart Page 🛑 Do Not Refresh. Only one item can be carted per account.","Verfying that first item in CART has KEYWORD");
                  document.body.appendChild($badge);
                  $badge.style.transform = "translate(0, 0)"
- 
+
                  //Wait 3 Seconds on Cart Page
                  //
                  setTimeout(function() {
@@ -169,16 +242,16 @@
                          }
                      }
                  }, 3000 )//Three seconds will elapse and Code will execute.
- 
+
              }
      }, 5000)
  }
- 
+
  //________________________________________________________________________
- 
+
                       //    VERIFICATION PAGE EventHandler
  //________________________________________________________________________
- 
+
  function verificationpageEventHandler (evt) {
      console.log('Verification Step Reached')
      setTimeout(function()
@@ -186,7 +259,7 @@
              if (location.href.indexOf("identity/signin/recoveryOptions") > -1) {
                  //Create Custom Badge
                  //
-                 const $badge = createFloatingBadge("Verification Page","Entering SMS Digits");
+                 const $badge = createFloatingBadge("Get Ready To Verify 🛑 Do Not Refresh ","Validating and Entering SMS Digits | It will error if you havent updated SMS_DIGITS ");
                  document.body.appendChild($badge);
                  $badge.style.transform = "translate(0, 0)"
                  setTimeout(function()
@@ -194,7 +267,7 @@
                      var ContinueButton;
                      const ContinueButton_L1 = "btn btn-secondary btn-lg btn-block c-button-icon c-button-icon-leading cia-form__controls__submit "
                      const ContinueButton_L2 = "c-button c-button-secondary c-button-lg c-button-block c-button-icon c-button-icon-leading cia-form__controls__submit "
- 
+
                      if (document.getElementsByClassName(ContinueButton_L1).length == 1)
                                                                  {
                           ContinueButton = document.getElementsByClassName(ContinueButton_L1);
@@ -202,9 +275,9 @@
                      } else if (document.getElementsByClassName(ContinueButton_L2).length == 1) {
                           ContinueButton = document.getElementsByClassName(ContinueButton_L2);
                           console.log('ContinueButton Class ID 2 :' + ContinueButton_L2)
- 
+
                      }
- 
+
                      document.getElementById("smsDigits").focus();
                      document.getElementById("smsDigits").select();
                      if (!document.execCommand('insertText',false, SMS_DIGITS)) {
@@ -214,29 +287,29 @@
                          ContinueButton[0].click()
                          ContinueButton = null;
                      }
-                 }, 1500)
+                 }, 2500)
             }
-     }, 2500)
+     }, 3000)
  }
- 
+
  //________________________________________________________________________
- 
+
                   //  SECOND ADD TO CART EventHandler
  //________________________________________________________________________
- 
- 
+
+
  function pleasewaitcompletedEventHandler (evt) {
      // We will come here when please wait turns yellow again and its pressed by the code
      var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
      soundData.play()
      // Wait for 10 seconds and press go Go to cart button
      setTimeout(function(){
- 
+
              // Press secondary button
              var GotoCartButton;
              const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
              const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
- 
+
              if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                                  {
                   GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
@@ -244,9 +317,9 @@
              } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                   GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                   console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
- 
+
              }
- 
+
              // Press go to cart
              if (GotoCartButton != null) {
                 for (var i=0;i<GotoCartButton.length; i++) {
@@ -259,94 +332,90 @@
                     }
                 }
              }
- 
+
      }, 4000)
  }
- 
- 
- 
+
+
+
  //________________________________________________________________________
- 
+
                    //  ITEM IN STOCK EventHandler
  //________________________________________________________________________
- 
+
  function instockEventHandler(evt) {
          // After pressing Add to Cart button we first wait for 5 seconds to get cart ready. In this time we will check if it shows please wait
          // Add to Cart Button Classes Layers
          var InStockButton;
          const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
          const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
- 
+
          if (document.getElementsByClassName(InStockButton_L1).length > 0)
          {
               InStockButton = document.getElementsByClassName(InStockButton_L1);
               console.log('instockEventHandler Button Class 1 : ' + InStockButton_L1)
- 
+
          } else if (document.getElementsByClassName(InStockButton_L2).length > 0) {
- 
+
              InStockButton = document.getElementsByClassName(InStockButton_L2);
              console.log('instockEventHandler Button Class  2 :' + InStockButton_L2)
- 
+
          }
- 
+
          setTimeout(function() {
           let MainButtonColor = window.getComputedStyle(InStockButton[0]).backgroundColor;
          //Code to run After timeout elapses
            console.log('Confirming Button Color : ' + MainButtonColor)
- 
+
                  if (MainButtonColor === 'rgb(197, 203, 213)') {
- 
+
                          console.log('Button Color Gray. Is it still Adding ?')
- 
+
                          setTimeout(function() {
- 
+
                                  var REALLY_PLEASE_WAIT = window.getComputedStyle(InStockButton[0]).backgroundColor;
- 
+
                                  if (REALLY_PLEASE_WAIT === 'rgb(197, 203, 213)') {
- 
+
                                          console.log('Its really Please Wait.')
- 
-                                         var MODE = "Trying to Cart 🛑 BOT WILL AUTOMATICALLY REFRESH !! "
- 
+
+                                         var MODE = "Do not Refresh 🛑 For new queue time open this link in new firefox container tab"
                                          //
                                          var RETRY_COUNT = "1"
                                          let RETRY_QUEUE_COUNT = 0
                                          let QUEUE_TRY_COUNT = 0
                                          // Run this every 5 seconds
                                          setInterval(function() {
-                                                 //Parsing New Time Button
-                                                 /*var xpathBetterTime = "//button[text()='Get New Queue Time']";
-                                                 var BetterTime = document.evaluate(xpathBetterTime, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                                                 //Parsing Time Remaining on Queue
-                                                 var xpathtime = "//p[text()='Time Remaining:']";
-                                                 var time = document.evaluate(xpathtime, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
-                                                 var TRIES = ("Request New Queue Time : " + NEW_QUEUE_TIME_DELAY + " Seconds ◻️ Minimum Queue Time Cut-off: " + QUEUE_TIME_CUTOFF + " Mins ◻️ " + time + " ◻️  Retry Count: " + RETRY_COUNT + " ◻️  Queue Try Count: " + QUEUE_TRY_COUNT);
-                                                 const $badge = createFloatingBadge(MODE, TRIES);
+                                                 // run checkQueueTimeRemaining Function which returns [remainingMin, remainingSec]
+                                                 const [remainingMin, remainingSec] = checkQueueTimeRemaining();
+                                                 //DEBUG//console.log(remainingMin,'m : ', remainingSec,'s')
+                                                 const queueBadge = 'Queue Time : ' + remainingMin + 'm : '+ remainingSec+'s'
+                                                 const $badge = createFloatingBadge(MODE,queueBadge);
                                                  document.body.appendChild($badge);
-                                                 $badge.style.transform = "translate(0, 0)"*/
+                                                 $badge.style.transform = "translate(0, 0)"
                                                  // Run this every 20 seconds
                                                  setTimeout(function() {
- 
+
                                                          //Find the Color of Main Button in Firefox
                                                          var PleaseWait;
                                                          const PleaseWait_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                                                          const PleaseWait_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
- 
+
                                                          if (document.getElementsByClassName(PleaseWait_L1).length == 1)
                                                          {
                                                               PleaseWait = document.getElementsByClassName(PleaseWait_L1);
                                                               console.log('PleaseWait Button Class 1 : ' + PleaseWait_L1)
- 
+
                                                          } else if (document.getElementsByClassName(PleaseWait_L2).length == 1) {
- 
+
                                                              PleaseWait = document.getElementsByClassName(PleaseWait_L2);
                                                              console.log('PleaseWait Button Class  2 :' + PleaseWait_L2)
                                                          }
- 
+
                                                          let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
                                                          //console.log(MainButtonColor);
                                                          console.log("Please Wait Button Detected :" + MainButtonColor + " | Lets keep trying ..");
- 
+
                                                          if (MainButtonColor === 'rgb(255, 224, 0)' || MainButtonColor === 'rgb(0, 70, 190)') {
                                                                  // Color of Button Changes to yellow then click again
                                                                  let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
@@ -355,18 +424,18 @@
                                                                  var ATCYellowButton;
                                                                  const ATCYellowButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                                                                  const ATCYellowButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
- 
+
                                                                  if (document.getElementsByClassName(ATCYellowButton_L1).length == 1)
                                                                  {
                                                                       ATCYellowButton = document.getElementsByClassName(ATCYellowButton_L1);
                                                                       console.log('PleaseWait Button Class 1 : ' + ATCYellowButton_L1)
- 
+
                                                                  } else if (document.getElementsByClassName(ATCYellowButton_L2).length == 1) {
- 
+
                                                                      ATCYellowButton = document.getElementsByClassName(ATCYellowButton_L2);
                                                                      console.log('PleaseWait Button Class  2 :' + ATCYellowButton_L2)
                                                                  }
- 
+
                                                                  // Now we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
                                                                  // It is said this this method reduces memory leaks
                                                                  ATCYellowButton[0].onclick = pleasewaitcompletedEventHandler;
@@ -375,7 +444,7 @@
                                                                  ATCYellowButton[0].click(pleasewaitcompletedEventHandler);
                                                                  var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
                                                                  soundData.play()
- 
+
                                                          } else {
                                                                  // Is queue bypass available ?
                                                                  // If available lets check add to cart button instanly
@@ -384,7 +453,7 @@
                                                                  var GotoCartButton;
                                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
- 
+
                                                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                                  {
                                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
@@ -392,9 +461,9 @@
                                                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
- 
+
                                                                  }
- 
+
                                                                  if (GotoCartButton != null) {
                                                                     for (var i=0;i<GotoCartButton.length; i++) {
                                                                         if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
@@ -406,8 +475,11 @@
                                                                         }
                                                                     }
                                                                  }
- 
-                                                                 /*const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
+
+                                                                 /*
+                                                                 // OLD CODE {might be useful for later}
+
+                                                                 const regex = /(?<=Time Remaining: )(.*)(?= min)/g;
                                                                  const found = time.match(regex);
                                                                  console.log(found[0])
                                                                  if ((found[0] > QUEUE_TIME_CUTOFF) && (RETRY_QUEUE_COUNT < RETRY_COUNT)) {
@@ -423,21 +495,21 @@
                                                                                  location.reload();
                                                                          }
                                                                  }*/
- 
- 
+
+
                                                          }
- 
+
                                                          //
- 
+
                                                  }, 5 * 1000);
- 
+
                                                  RETRY_COUNT++;
                                                  if (RETRY_COUNT > MAX_RETRIES) {
                                                          location.reload();
                                                  }
- 
+
                                          }, 1000)
- 
+
                                  } else {
                                          var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
                                           soundData.play()
@@ -447,7 +519,7 @@
                                                  var GotoCartButton;
                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
- 
+
                                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                  {
                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
@@ -455,9 +527,9 @@
                                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
- 
+
                                                  }
- 
+
                                                  if (GotoCartButton != null) {
                                                     for (var i=0;i<GotoCartButton.length; i++) {
                                                         if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
@@ -470,11 +542,11 @@
                                                     }
                                                  }
                                          }, 6000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
- 
+
                                  }
- 
+
                          }, 3000)
- 
+
                  } else {
                          var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
                          soundData.play()
@@ -484,7 +556,7 @@
                                  var GotoCartButton;
                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
- 
+
                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                  {
                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
@@ -492,9 +564,9 @@
                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
- 
+
                                  }
- 
+
                                  if (GotoCartButton != null) {
                                     for (var i=0;i<GotoCartButton.length; i++) {
                                         if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
@@ -507,19 +579,19 @@
                                     }
                                  }
                          }, 3000) // If item is not please waited then it will open go to cart again. This only happens for in stock items
- 
+
                  }
- 
- 
- 
+
+
+
          }, 2000); //Two seconds will elapse and Code will execute.
          //
  }
  //________________________________________________________________________
- 
+
                             //  Main Code
  //________________________________________________________________________
- 
+
  function contains(a,b) {
      let counter = 0;
      for(var i = 0; i < b.length; i++) {;
@@ -528,16 +600,16 @@
      if(counter === b.length) return true;
      return false;
  }
- 
+
  // Get Page Title
  var pagetitle = String(document.title);
- 
+
  if (location.href.includes("www.bestbuy.com/cart")) {
- 
+
      cartpageoperationsEvenHandler();
- 
+
  }
- 
+
  // Refresh page if Sign In page is encountered to recheck for Verification Page
  if (pagetitle.includes("Sign In to Best Buy")) {
      setInterval(function() {
@@ -548,17 +620,17 @@
          }
      }, 1000);
  }
- 
+
  // Check for Verification Page
  if (pagetitle.includes("Recovery")) {
- 
+
      verificationpageEventHandler();
- 
+
  }
- 
+
  if (pagetitle.includes(ITEM_KEYWORD)) {
- 
- 
+
+
          //Create Custom Badge
          //
          const $badge = createFloatingBadge("Auto Detecting Mode", "Initializing ..");
@@ -582,61 +654,61 @@
              console.log('OOS Button Class 2 : ' + OOSButton_L2)
           }
          else {
- 
+
           // When OOS is not found this will have 0 length. We need have value in OOSButton to move forward
           OOSButton = document.getElementsByClassName("btn btn-disabled btn-lg btn-block add-to-cart-button");
- 
+
           }
- 
+
          // If Out of Stock Button is Found. Refresh
- 
+
          if (OOSButton.length > 0 ) {
                  //
+                  const $badge = createFloatingBadge("No Stock Found | Note: Run bot only during a drop ", "Working on refreshing, make sure you have pop-ups enabled");
+                  document.body.appendChild($badge);
+                  $badge.style.transform = "translate(0, 0)";
                  //
                  console.log('Out of Stock Button is Found: Just Refreshing !')
                  // Lets just reload when its OOSing
                  setTimeout(function(){
-                         const $badge = createFloatingBadge("No Stock Found", "Lets Refresh !");
-                         document.body.appendChild($badge);
-                         setTimeout(() => {$badge.style.transform = "translate(0, 0)";}, 0);
- 
+
                      window.open(window.location.href, '_blank');
                      window.close();
                      //location.reload(); // This command here blows up your memory
- 
+
                                           //
                                           //
                  }, OOS_REFRESH*1000);
- 
+
          }
          // If Out of Stock Button is Not Found.
          // We will begin working of our bot
          //
          else {
                  console.log('Out of Stock Button Not Found: Lets Check for ATC Button')
- 
+
                  // Add to Cart Button Classes Layers
                  var InStockButton;
                  const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                  const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
- 
+
                  if (document.getElementsByClassName(InStockButton_L1).length == 1)
                  {
                       InStockButton = document.getElementsByClassName(InStockButton_L1);
                       console.log('InStockButton Class ID 1 : ' + InStockButton_L1)
- 
+
                  } else if (document.getElementsByClassName(InStockButton_L2).length == 1) {
- 
+
                      InStockButton = document.getElementsByClassName(InStockButton_L2);
                      console.log('InStockButton Class ID 2 :' + InStockButton_L2)
- 
+
                  }
- 
+
                  //
                  // Checking if ATC button is found
                  if (InStockButton.length > 0)
                  {
- 
+
                          console.log('Add to Cart Found')
                          // Lets Save the Color for ATC Button for dealing with Please Wait Bullshit
                          let ATC_Color = window.getComputedStyle(InStockButton[0]).backgroundColor;
@@ -648,8 +720,8 @@
                              //
                              console.log('ATC is grey ! You have already pressed please wait for this item. Lets wait until we can bag this.')
                              instockEventHandler() ;
- 
- 
+
+
                          }
                          else
                          {
@@ -664,16 +736,16 @@
                                  InStockButton[0].click (instockEventHandler);
                              }, 2000)
                         }
- 
- 
- 
+
+
+
                  }
- 
+
          }
  }
- 
- 
- 
+
+
+
  // CART PAGE OPERATIONS
  else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
      //Create Custom Badge
@@ -695,27 +767,27 @@
              //
              console.log('Item Has been Confirmed !')
              console.log('Click Place Order')
- 
+
                  //
                  //document.getElementById("blah").src = "http://......"
                  // CVV Number of Saved Card
                  // Bug fix: by craz3drunner (discord member)
- 
+
                  // CVV Field ID Layers
                  var CVV_ID;
                  const CVV_ID_L1 = "cvv"
                  const CVV_ID_L2 = "credit-card-cvv"
- 
+
                  if (document.getElementById(CVV_ID_L1) != null)
                  {
                       CVV_ID = CVV_ID_L1;
                       console.log('CVV ID 1 : ' + CVV_ID_L1)
- 
+
                  } else if (document.getElementById(CVV_ID_L2) != null) {
- 
+
                      CVV_ID = CVV_ID_L2;
                      console.log('CVV ID 2 :' + CVV_ID_L2)
- 
+
                  }
                  if(document.getElementById(CVV_ID) != null) {
                      document.getElementById(CVV_ID).focus();
@@ -724,7 +796,7 @@
                          document.getElementById(CVV_ID).value = CREDITCARD_CVV;
                      }
                  }
- 
+
                      if(document.getElementById("text-updates") != null)
                      {
                          //
@@ -735,23 +807,39 @@
                  //Is test mode is OFF go press place order button
                  //
                  console.log("we are here")
-                 var PLACE_ORDER = document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
+                 document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
                  //
                  }
                  //
                  //
          }
      }, 3000); //Three seconds will elapse and Code will execute.
- 
- 
- 
- 
+
+
+
+
  }
- 
- 
- 
- 
- 
- 
- 
- 
+ // SIGN IN OPERATIONS
+ else if (location.href.includes("www.bestbuy.com/identity/signin")) {
+
+         const $badge = createFloatingBadge("Sign-In Page Detected | Please have your credentials saved ","Clicking Sign-In in 5 Seconds");
+         document.body.appendChild($badge);
+         $badge.style.transform = "translate(0, 0)"
+
+     setTimeout(function(){
+
+         var signInButton = document.getElementsByClassName("c-button c-button-secondary c-button-lg c-button-block c-button-icon c-button-icon-leading cia-form__controls__submit")[0];
+         signInButton.click()
+
+         //
+         //
+     }, 5000);
+
+ }
+
+
+
+
+
+
+

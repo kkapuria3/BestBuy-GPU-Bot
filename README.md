@@ -31,9 +31,6 @@ BestBuy Bot is an Add to cart and Auto Checkout Bot. This auto buying bot can se
 I built this in response to the severe tech scalping situation that's happening right now. Almost every tech product that's coming out right now is being instantly brought out by scalping groups and then resold at at insane prices. $699 GPUs are being listed for $1700 on eBay, and these scalpers are buying 40 carts while normal consumers can't get a single one. Preorders for the PS5 are being resold for nearly $1000. My take on this is that if I release a bot that anyone can use, for free, then the number of items that scalpers can buy goes down and normal consumers can buy items for MSRP. If everyone is botting, then no one is botting.
 
 
-```
-#fairgame
-```
 
 ## Getting Started
 
@@ -57,12 +54,13 @@ I built this in response to the severe tech scalping situation that's happening 
 
 <img src="resources/flags.gif">
 
+### [Youtube Video Tutorial](https://www.youtube.com/watch?v=UL6tzc1gPmM)
 
-### Testing (Best Buy has disabled `Please Wait` testing - 08/24/2021)
+### Testing/Strategies
 
-* Use these product links to test the BOT 
-* [AMD - Ryzen 5 5600X](https://www.bestbuy.com/site/amd-ryzen-5-5600x-4th-gen-6-core-12-threads-unlocked-desktop-processor-with-wraith-stealth-cooler/6438943.p?skuId=6438943)
-* [AMD - Ryzen 7 5800X](https://www.bestbuy.com/site/amd-ryzen-7-5800x-4th-gen-8-core-16-threads-unlocked-desktop-processor-without-cooler/6439000.p?skuId=6439000)
+Since BestBuy has queue system for when GPU/Consoles drop, testing bot is impossible outside the actual drop.
+Its recommended to run the bot during/before the drop as drops occurs in waves over few mins to hours. Join our discord for historical drop data, FAQs and strategies.
+[![Discord](https://img.shields.io/discord/863863008329596968?color=%237289da%20&label=FOR%20SUPPORT%20AND%20FAQs%20%20%7C%20JOIN%20DISCORD&style=for-the-badge)](https://discord.gg/wkznBbgBFD)
 
 
 ### Further Details
@@ -84,7 +82,6 @@ const TESTMODE = "Yes"
 ```
 const SMS_DIGITS = "****"
 ``` 
-
 
 ## Workflow
 
@@ -142,7 +139,7 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* I have Added extra layer of code which will handle for new button classes.
 	* `Please Wait` functionality should still work if layer we added is not activated.
 * 3.2 Extra Button Class Layers Added
-	* Button classes layered into 'if else' loops
+	* Button classes layered into 'if else'  loops
 	* When 1st ATC is pressed. 'Adding..' takes about 4-6 seconds. We double check gray color for 'Please Wait'.
 	* If not Please Wait then 2nd ATC is triggered
 * 3.3 Button layers are reinforced
@@ -155,6 +152,13 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* Updated NEW_QUEUE_TIME_DELAY flag to change how often new queue time is requested
 * 3.7 Removed Nerdspeak Integration
 	* Commented out Nerdspeak Integration due to possible account flagging by Best Buy causing queue looping
+* 4.0 BB Queue Timer and Sign-In on Container tabs
+	* Added QueueTimer Functions - Queue Timer is now shown on bot UI during please wait
+	* Increase Verfication Time from 1.5 - 2.5s
+	* Automatic 5 seconds signin after cart when running on private container tabs
+	* QueueTimer Functions gets called when really please wait is detected
+	* Updated Bot Messages 
+
 
 
 ## License
