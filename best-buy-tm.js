@@ -3,11 +3,12 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      4.0
+// @version      4.1
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
 
+/*
 // Version Changelog
 // 1.0 - Initial release
 // 2.0 - 'Please Wait...' items can now be CARTED and CHECKEDOUT
@@ -46,6 +47,9 @@
 // - Automatic 5 seconds signin after cart when running on private container tabs
 // - QueueTimer Functions gets called when really please wait is detected
 // - Updated Bot Messages 
+// 4.1 BB Queue Timer and Sign-In on Container tabs
+// - Fixed issue of new side tab thingy 
+*/
 
 // ==/UserScript==
 
@@ -87,6 +91,19 @@
  //____ LAZY FLAGS : WILL NOT AFFECT BOT PERFORMACE _____________________
 
  const MAX_RETRIES = "500" // Fossil of EARTH
+
+ //________________________________________________________________________
+
+                  // Chime Sound
+ //________________________________________________________________________
+
+// Play a chime sound to notify the user
+function playChime() {
+    // You can choose any online sound file. 
+    const chimeUrl = "https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true";
+    const audio = new Audio(chimeUrl);
+    audio.play().catch(err => console.error("Audio play failed:", err));
+}
 
  //________________________________________________________________________
 
@@ -176,7 +193,7 @@ console.log('found sku', sku);
      $link.setAttribute("target", "_blank");
      $link.setAttribute("title", "RefreshNoBot");
      $img.setAttribute("src", iconUrl);
-     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.0 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
+     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.1 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
      $text.innerText = MAIN_TITLE;
      $mode.innerText = mode;
      $status1.innerText = status;
@@ -254,6 +271,7 @@ console.log('found sku', sku);
 
  function verificationpageEventHandler (evt) {
      console.log('Verification Step Reached')
+     playChime();
      setTimeout(function()
      {
              if (location.href.indexOf("identity/signin/recoveryOptions") > -1) {
@@ -267,6 +285,7 @@ console.log('found sku', sku);
                      var ContinueButton;
                      const ContinueButton_L1 = "btn btn-secondary btn-lg btn-block c-button-icon c-button-icon-leading cia-form__controls__submit "
                      const ContinueButton_L2 = "c-button c-button-secondary c-button-lg c-button-block c-button-icon c-button-icon-leading cia-form__controls__submit "
+                     const ContinueButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                      if (document.getElementsByClassName(ContinueButton_L1).length == 1)
                                                                  {
@@ -275,6 +294,10 @@ console.log('found sku', sku);
                      } else if (document.getElementsByClassName(ContinueButton_L2).length == 1) {
                           ContinueButton = document.getElementsByClassName(ContinueButton_L2);
                           console.log('ContinueButton Class ID 2 :' + ContinueButton_L2)
+
+                     } else if (document.getElementsByClassName(ContinueButton_L3).length == 1) {
+                          ContinueButton = document.getElementsByClassName(ContinueButton_L3);
+                          console.log('ContinueButton Class ID 2 :' + ContinueButton_L3)
 
                      }
 
@@ -298,45 +321,42 @@ console.log('found sku', sku);
  //________________________________________________________________________
 
 
- function pleasewaitcompletedEventHandler (evt) {
-     // We will come here when please wait turns yellow again and its pressed by the code
-     var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-     soundData.play()
-     // Wait for 10 seconds and press go Go to cart button
-     setTimeout(function(){
-
-             // Press secondary button
-             var GotoCartButton;
-             const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
-             const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
-
-             if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
-                                                                 {
-                  GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
-                  console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1)
-             } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
-                  GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
-                  console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
-
-             }
-
-             // Press go to cart
-             if (GotoCartButton != null) {
-                for (var i=0;i<GotoCartButton.length; i++) {
-                    if (GotoCartButton[i].href == 'https://www.bestbuy.com/cart'){
-                        GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
-                        GotoCartButton[i].addEventListener ("click", cartpageoperationsEvenHandler, false);
-                        // When a click event is detected for parsed element, please execute the function from uptop
-                        GotoCartButton[i].click (cartpageoperationsEvenHandler);
-                        GotoCartButton = null ;
-                    }
+function pleasewaitcompletedEventHandler(evt) {
+    // Wait 4 seconds before clicking the final "Go to Cart" button
+    setTimeout(function() {
+        var GotoCartButton;
+        // Existing class strings...
+        const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block";
+        const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block";
+        // NEW variant that matches your provided HTML element:
+        const GotoCartButton_L3 = "c-button c-button-secondary c-button-md c-button-block";
+        if (document.getElementsByClassName(GotoCartButton_L1).length > 0) {
+            GotoCartButton = document.getElementsByClassName(GotoCartButton_L1);
+            console.log('GotoCartButton Class ID 1 : ' + GotoCartButton_L1);
+        } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
+            GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
+            console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2);
+        } else if (document.getElementsByClassName(GotoCartButton_L3).length > 0) {
+            GotoCartButton = document.getElementsByClassName(GotoCartButton_L3);
+            console.log('GotoCartButton Class ID 3 :' + GotoCartButton_L3);
+        }
+        // If the button is found, iterate and click the one that links to the cart page.
+        if (GotoCartButton != null) {
+            for (var i = 0; i < GotoCartButton.length; i++) {
+                if (GotoCartButton[i].href === 'https://www.bestbuy.com/cart' ||
+                    GotoCartButton[i].href === '/cart') {
+                    // Set up the click event handler
+                    GotoCartButton[i].onclick = cartpageoperationsEvenHandler;
+                    GotoCartButton[i].addEventListener("click", cartpageoperationsEvenHandler, false);
+                    // Trigger a click on the element
+                    GotoCartButton[i].click();
+                    GotoCartButton = null;
+                    break;
                 }
-             }
-
-     }, 4000)
- }
-
-
+            }
+        }
+    }, 4000);
+}
 
  //________________________________________________________________________
 
@@ -349,6 +369,7 @@ console.log('found sku', sku);
          var InStockButton;
          const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
          const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+         const InStockButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
          if (document.getElementsByClassName(InStockButton_L1).length > 0)
          {
@@ -359,6 +380,11 @@ console.log('found sku', sku);
 
              InStockButton = document.getElementsByClassName(InStockButton_L2);
              console.log('instockEventHandler Button Class  2 :' + InStockButton_L2)
+
+         } else if (document.getElementsByClassName(InStockButton_L3).length > 0) {
+
+             InStockButton = document.getElementsByClassName(InStockButton_L3);
+             console.log('instockEventHandler Button Class  3 :' + InStockButton_L3)
 
          }
 
@@ -400,6 +426,7 @@ console.log('found sku', sku);
                                                          var PleaseWait;
                                                          const PleaseWait_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                                                          const PleaseWait_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+                                                         const PleaseWait_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                                                          if (document.getElementsByClassName(PleaseWait_L1).length == 1)
                                                          {
@@ -410,6 +437,10 @@ console.log('found sku', sku);
 
                                                              PleaseWait = document.getElementsByClassName(PleaseWait_L2);
                                                              console.log('PleaseWait Button Class  2 :' + PleaseWait_L2)
+                                                         } else if (document.getElementsByClassName(PleaseWait_L3).length == 1) {
+
+                                                             PleaseWait = document.getElementsByClassName(PleaseWait_L3);
+                                                             console.log('PleaseWait Button Class  3 :' + PleaseWait_L3)
                                                          }
 
                                                          let MainButtonColor = window.getComputedStyle(PleaseWait[0]).backgroundColor;
@@ -424,6 +455,7 @@ console.log('found sku', sku);
                                                                  var ATCYellowButton;
                                                                  const ATCYellowButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                                                                  const ATCYellowButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+                                                                 const ATCYellowButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                                                                  if (document.getElementsByClassName(ATCYellowButton_L1).length == 1)
                                                                  {
@@ -434,6 +466,10 @@ console.log('found sku', sku);
 
                                                                      ATCYellowButton = document.getElementsByClassName(ATCYellowButton_L2);
                                                                      console.log('PleaseWait Button Class  2 :' + ATCYellowButton_L2)
+                                                                 } else if (document.getElementsByClassName(ATCYellowButton_L3).length == 1) {
+
+                                                                     ATCYellowButton = document.getElementsByClassName(ATCYellowButton_L3);
+                                                                     console.log('PleaseWait Button Class  2 :' + ATCYellowButton_L3)
                                                                  }
 
                                                                  // Now we will use event handlers to check for clicks. We have create a function on top defining instockEventhandler.
@@ -442,8 +478,6 @@ console.log('found sku', sku);
                                                                  ATCYellowButton[0].addEventListener("click", pleasewaitcompletedEventHandler, false);
                                                                  // When a click event is detected for parsed element, please execute the function from uptop
                                                                  ATCYellowButton[0].click(pleasewaitcompletedEventHandler);
-                                                                 var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-                                                                 soundData.play()
 
                                                          } else {
                                                                  // Is queue bypass available ?
@@ -453,6 +487,7 @@ console.log('found sku', sku);
                                                                  var GotoCartButton;
                                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+                                                                 const GotoCartButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                                                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                                  {
@@ -461,6 +496,10 @@ console.log('found sku', sku);
                                                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                                                 } else if (document.getElementsByClassName(GotoCartButton_L3).length > 0) {
+                                                                      GotoCartButton = document.getElementsByClassName(GotoCartButton_L3);
+                                                                      console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L3)
 
                                                                  }
 
@@ -511,14 +550,13 @@ console.log('found sku', sku);
                                          }, 1000)
 
                                  } else {
-                                         var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-                                          soundData.play()
                                          setTimeout(function() {
                                                  // Press secondary button
                                                  console.log('Level 2 | Blue Cart Button Appears')
                                                  var GotoCartButton;
                                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+                                                 const GotoCartButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                                  {
@@ -527,6 +565,10 @@ console.log('found sku', sku);
                                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                                 } else if (document.getElementsByClassName(GotoCartButton_L3).length > 0) {
+                                                      GotoCartButton = document.getElementsByClassName(GotoCartButton_L3);
+                                                      console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L3)
 
                                                  }
 
@@ -548,14 +590,13 @@ console.log('found sku', sku);
                          }, 3000)
 
                  } else {
-                         var soundData = new Audio("https://github.com/kkapuria3/BestBuy-GPU-Bot/blob/dev-v2.5-mem_leak_fix/resources/alert.mp3?raw=true");
-                         soundData.play()
                          setTimeout(function() {
                                  // Press secondary button
                                  console.log('Level 1 | Blue Cart Button Appears')
                                  var GotoCartButton;
                                  const GotoCartButton_L1 = "c-button c-button-secondary btn btn-secondary btn-sm c-button-sm btn-block c-button-block"
                                  const GotoCartButton_L2 = "c-button c-button-secondary c-button-sm c-button-block "
+                                 const GotoCartButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                                  if (document.getElementsByClassName(GotoCartButton_L1).length > 0)
                                  {
@@ -564,6 +605,10 @@ console.log('found sku', sku);
                                  } else if (document.getElementsByClassName(GotoCartButton_L2).length > 0) {
                                       GotoCartButton = document.getElementsByClassName(GotoCartButton_L2);
                                       console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L2)
+
+                                 } else if (document.getElementsByClassName(GotoCartButton_L3).length > 0) {
+                                      GotoCartButton = document.getElementsByClassName(GotoCartButton_L3);
+                                      console.log('GotoCartButton Class ID 2 :' + GotoCartButton_L3)
 
                                  }
 
@@ -640,8 +685,9 @@ console.log('found sku', sku);
          //Out of Stock Button
          //
          var OOSButton;
-         const OOSButton_L1 = "c-button c-button-disabled c-button-lg c-button-block add-to-cart-button"
+         const OOSButton_L1 = "c-button c-button-disabled c-button-lg c-button-block add-to-cart-button c-button-secondary c-button-md"
          const OOSButton_L2 = "btn btn-disabled btn-lg btn-block add-to-cart-button"
+         const OOSButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
          console.log('BEGIN ')
          if (document.getElementsByClassName(OOSButton_L1).length == 1)
          {
@@ -653,6 +699,7 @@ console.log('found sku', sku);
              OOSButton = document.getElementsByClassName(OOSButton_L2);
              console.log('OOS Button Class 2 : ' + OOSButton_L2)
           }
+
          else {
 
           // When OOS is not found this will have 0 length. We need have value in OOSButton to move forward
@@ -691,6 +738,7 @@ console.log('found sku', sku);
                  var InStockButton;
                  const InStockButton_L1 = "btn btn-primary btn-lg btn-block btn-leading-ficon add-to-cart-button"
                  const InStockButton_L2 = "c-button c-button-primary c-button-lg c-button-block c-button-icon c-button-icon-leading add-to-cart-button"
+                 const InStockButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
 
                  if (document.getElementsByClassName(InStockButton_L1).length == 1)
                  {
@@ -701,6 +749,11 @@ console.log('found sku', sku);
 
                      InStockButton = document.getElementsByClassName(InStockButton_L2);
                      console.log('InStockButton Class ID 2 :' + InStockButton_L2)
+
+                 } else if (document.getElementsByClassName(InStockButton_L3).length == 1) {
+
+                     InStockButton = document.getElementsByClassName(InStockButton_L3);
+                     console.log('InStockButton Class ID 2 :' + InStockButton_L3)
 
                  }
 
@@ -836,10 +889,3 @@ console.log('found sku', sku);
      }, 5000);
 
  }
-
-
-
-
-
-
-
