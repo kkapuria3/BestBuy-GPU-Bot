@@ -800,7 +800,7 @@ function pleasewaitcompletedEventHandler(evt) {
 
 
  // CART PAGE OPERATIONS
- else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track")) {
+ else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track") || location.href.includes("www.bestbuy.com/checkout/c/fast-track")) {
      //Create Custom Badge
      //
      const $badge = createFloatingBadge("Final CheckPoint","Verifying and Submitting");
