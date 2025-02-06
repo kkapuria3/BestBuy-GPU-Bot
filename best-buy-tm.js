@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      4.1
+// @version      4.2
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -685,7 +685,7 @@ function pleasewaitcompletedEventHandler(evt) {
          //Out of Stock Button
          //
          var OOSButton;
-         const OOSButton_L1 = "c-button c-button-disabled c-button-lg c-button-block add-to-cart-button c-button-secondary c-button-md"
+         const OOSButton_L1 = "c-button c-button-disabled c-button-lg c-button-block add-to-cart-button"
          const OOSButton_L2 = "btn btn-disabled btn-lg btn-block add-to-cart-button"
          const OOSButton_L3 = "c-button c-button-secondary c-button-md c-button-block"
          console.log('BEGIN ')
@@ -860,7 +860,7 @@ function pleasewaitcompletedEventHandler(evt) {
                  //Is test mode is OFF go press place order button
                  //
                  console.log("we are here")
-                 document.getElementsByClassName("btn btn-lg btn-block btn-primary button__fast-track")[0].click()
+                 document.getElementsByClassName("btn btn-lg btn-block btn-primary")[0].click()
                  //
                  }
                  //
