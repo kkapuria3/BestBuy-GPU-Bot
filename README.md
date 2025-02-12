@@ -82,6 +82,10 @@ const TESTMODE = "Yes"
 ```
 const SMS_DIGITS = "****"
 ``` 
+* Preferred Shipping "Yes will select the Shipping Radio Button if available
+```
+const PREFERRED_SHIPPING = "No"
+``` 
 
 ## Workflow
 
@@ -157,7 +161,14 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* Increase Verfication Time from 1.5 - 2.5s
 	* Automatic 5 seconds signin after cart when running on private container tabs
 	* QueueTimer Functions gets called when really please wait is detected
-	* Updated Bot Messages 
+	* Updated Bot Messages
+ * 4.1 BB Queue Timer and Sign-In on Container tabs
+	* Fixed issue of new side tab thingy
+ * 4.2 Fixed Cart buttons
+	* Fixed name of Cart buttons due to change by BB
+ * 4.3 Added Shipping Option
+ * 	Added option to select shipping if Available
+    
 
 
 
