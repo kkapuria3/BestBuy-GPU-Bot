@@ -82,7 +82,7 @@ const TESTMODE = "Yes"
 ```
 const SMS_DIGITS = "****"
 ``` 
-* Preferred Shipping "Yes will select the Shipping Radio Button if available
+* Preferred Shipping "Yes" will select the Shipping Radio Button if available
 ```
 const PREFERRED_SHIPPING = "No"
 ``` 
