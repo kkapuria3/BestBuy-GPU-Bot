@@ -167,8 +167,9 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
  * 4.2 Fixed Cart buttons
 	* Fixed name of Cart buttons due to change by BB
  * 4.3 Added Shipping Option
- * 	Added option to select shipping if Available
-    
+	* Added option to select shipping if Available
+ * 4.4 Update Final Item List Class
+	* Fixed check on final item list before CVV
 
 
 
