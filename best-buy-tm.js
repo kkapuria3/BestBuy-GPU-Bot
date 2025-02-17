@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      4.3
+// @version      4.4
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -51,7 +51,7 @@
 // - Fixed issue of new side tab thingy
 // 4.2 Fixed Cart buttons
 // 4.3 Added Option to choose Shipping if Available
-*/ 
+*/ 4.4 Adjusted Final Checkout Item List
 
 // ==/UserScript==
 
@@ -828,7 +828,7 @@ function pleasewaitcompletedEventHandler(evt) {
          //We will verify that the item in final checkout screen matches the Keyword so we don't have any issues when running multiple scripts for multiple keyword.
          //In that case the Place Order button is clicked.
          //
-         var CartItemCheck = document.getElementsByClassName("item-list__spacer text-left item-list__title");
+         var CartItemCheck = document.getElementsByClassName("d-flex items-start flex-column gap-100");
          //console.log(CartItemCheck[0])
          //
          //
