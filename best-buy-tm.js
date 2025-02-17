@@ -196,7 +196,7 @@ console.log('found sku', sku);
      $link.setAttribute("target", "_blank");
      $link.setAttribute("title", "RefreshNoBot");
      $img.setAttribute("src", iconUrl);
-     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.3 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
+     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.4 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
      $text.innerText = MAIN_TITLE;
      $mode.innerText = mode;
      $status1.innerText = status;
