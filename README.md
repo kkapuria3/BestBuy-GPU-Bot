@@ -170,6 +170,8 @@ Please use ```TESTMODE = "Yes"``` to test with an item already in stock.
 	* Added option to select shipping if Available
  * 4.4 Update Final Item List Class
 	* Fixed check on final item list before CVV
+ 	* Fixed sms/text opt in buttons
+  	* Fixed Final Place Order button 
 
 
 
