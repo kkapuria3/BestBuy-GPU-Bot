@@ -3,7 +3,7 @@
 // @include  https://www.bestbuy.com/*
 // @updateURL  https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
 // @downloadURL https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js
-// @version      4.3
+// @version      4.4
 // @description  This aint bot, its RefreshNoBot
 // @author       Karan Kapuria
 // @grant        window.close
@@ -51,7 +51,11 @@
 // - Fixed issue of new side tab thingy
 // 4.2 Fixed Cart buttons
 // 4.3 Added Option to choose Shipping if Available
-*/ 
+// 4.4 Adjusted Final Checkout Changes
+// - Updated Final Checkout Item list to validate item is in cart on final screen correctly
+// - Corrected SMS/Text checkbox and added console logging to trace
+// - Update Final Checkout Place Order Button
+*/
 
 // ==/UserScript==
 
@@ -196,7 +200,7 @@ console.log('found sku', sku);
      $link.setAttribute("target", "_blank");
      $link.setAttribute("title", "RefreshNoBot");
      $img.setAttribute("src", iconUrl);
-     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.3 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
+     var MAIN_TITLE = (" OpenSourceBots | BestBuyBot v4.4 | ◻️TESTMODE: " +TESTMODE + "◻️ITEM KEYWORD: " + ITEM_KEYWORD+ "◻️OOS REFRESH: " + OOS_REFRESH);
      $text.innerText = MAIN_TITLE;
      $mode.innerText = mode;
      $status1.innerText = status;
@@ -815,7 +819,7 @@ function pleasewaitcompletedEventHandler(evt) {
 
 
 
- // CART PAGE OPERATIONS
+// CART PAGE OPERATIONS
  else if (location.href.includes("www.bestbuy.com/checkout/r/fast-track") || location.href.includes("www.bestbuy.com/checkout/c/fast-track")) {
      //Create Custom Badge
      //
@@ -828,14 +832,14 @@ function pleasewaitcompletedEventHandler(evt) {
          //We will verify that the item in final checkout screen matches the Keyword so we don't have any issues when running multiple scripts for multiple keyword.
          //In that case the Place Order button is clicked.
          //
-         var CartItemCheck = document.getElementsByClassName("item-list__spacer text-left item-list__title");
+         var CartItemCheck = document.getElementsByClassName("d-flex items-start flex-column gap-100");
          //console.log(CartItemCheck[0])
          //
          //
          if (CartItemCheck[0].innerHTML.includes(ITEM_KEYWORD)){
              //
              console.log('Item Has been Confirmed !')
-             console.log('Click Place Order')
+             //console.log('Click Place Order')
 
                  //
                  //document.getElementById("blah").src = "http://......"
@@ -863,21 +867,30 @@ function pleasewaitcompletedEventHandler(evt) {
                      document.getElementById(CVV_ID).select();
                      if (!document.execCommand('insertText',false, CREDITCARD_CVV)) {
                          document.getElementById(CVV_ID).value = CREDITCARD_CVV;
+                         console.log('CVV Entered')
                      }
                  }
 
-                     if(document.getElementById("text-updates") != null)
+                 if(document.getElementById("text-updates") != null)
                      {
                          //
-                         var TextUpdates = document.getElementById("text-updates").click()
-                         //console.log(TextUpdates[0].checked)
+                         var TextUpdates = document.getElementById("text-updates").click();
+                         console.log('Text Updates checked')
+                     }
+                 if(document.getElementById("smsOptIn") != null)
+                     {
+                         //
+                         var SMSUpdates = document.getElementById("smsOptIn").click();
+                         console.log('SMS Updates checked')
                      }
                  if (TESTMODE === "No"){
                  //Is test mode is OFF go press place order button
                  //
-                 console.log("we are here")
-                 document.getElementsByClassName("btn btn-lg btn-block btn-primary")[0].click()
+                 console.log("Placing order ...")
+                 document.getElementsByClassName("c-button-unstyled rounded-lg border-comp-outline-secondary h-600 bg-comp-surface-secondary-emphasis px-400")[0].click()
                  //
+                 } else {
+                     console.log('Test Mode is ON.  Ready to Place Order Manually')
                  }
                  //
                  //
