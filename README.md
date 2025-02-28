@@ -47,7 +47,7 @@ I built this in response to the severe tech scalping situation that's happening 
 
 ### Installing
 
-* Go to tampermonkey dashboard from broswer extension and create a new script
+* Go to tampermonkey dashboard from browser extension and create a new script
 * Delete all the contents and copy full code from [best-buy-tm.js](https://raw.githubusercontent.com/kkapuria3/BestBuy-GPU-Bot/main/best-buy-tm.js)
 * Save the script
 * Updated REQUIRED FLAGS to your specifications
